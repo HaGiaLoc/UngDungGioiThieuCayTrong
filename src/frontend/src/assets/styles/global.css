@@ -1,0 +1,926 @@
+/* ===================================================================
+   1. CÀI ĐẶT CHUNG & BIẾN (VARIABLES)
+   - Reset CSS mặc định, định nghĩa các biến màu sắc, font chữ.
+   - Các style cơ bản cho body, headings (h1, h2, h3), p, a, ul, img.
+   =================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Giúp việc tính toán kích thước box dễ dàng hơn */
+}
+
+/* Biến màu sắc và font chữ cho toàn trang web */
+:root {
+    --primary-color: #4CAF50;    /* Màu xanh lá cây chính */
+    --secondary-color: #81C784;  /* Màu xanh lá cây phụ, nhạt hơn */
+    --dark-color: #333;          /* Màu chữ/nền đậm */
+    --light-color: #f8f9fa;      /* Màu nền sáng */
+    --text-color: #555;          /* Màu chữ thông thường */
+    --heading-font: 'Playfair Display', serif; /* Font cho các tiêu đề */
+    --body-font: 'Montserrat', sans-serif;    /* Font cho nội dung chính */
+}
+
+body {
+    font-family: var(--body-font);
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: #ffffff;
+}
+
+h1, h2, h3 {
+    font-family: var(--heading-font);
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.8rem; }
+h2 { font-size: 2.2rem; text-align: center; margin-bottom: 2.5rem; color: #2E8B57; }
+h3 { font-size: 1.4rem; }
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%; /* Đảm bảo ảnh không bị tràn ra ngoài */
+    display: block;
+}
+
+/* Style chung cho các nút bấm (Button) */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #3e8e41; /* Làm màu đậm hơn khi hover */
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #fff;
+    margin-top: 1rem;
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+}
+
+
+/* ===================================================================
+   2. HEADER & NAVIGATION
+   - Style cho phần đầu trang, logo, menu điều hướng và thanh tìm kiếm.
+   =================================================================== */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+    position: sticky; /* Giúp header luôn ở trên cùng khi cuộn trang */
+    top: 0;
+    z-index: 100;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header .logo {
+    flex-shrink: 0; /* Ngăn logo bị co lại */
+    margin-left: -10px;
+}
+
+header .logo a {
+  font-family: var(--heading-font);
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  font-weight: bold;
+  white-space: nowrap; /* Ngăn logo xuống dòng */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    margin-left: 3rem;
+}
+
+header nav ul {
+    display: flex;
+    align-items: center;
+}
+
+header nav ul li {
+    margin-left: 2rem;
+}
+
+header nav ul li:first-child {
+    margin-left: 0;
+}
+
+header nav ul li a {
+    color: var(--dark-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+header nav ul li a:hover {
+    color: var(--primary-color);
+}
+
+/* Thanh tìm kiếm trong header */
+.search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    padding-left: 15px;
+    background-color: #fff;
+    margin-left: 2.5rem;
+    flex-shrink: 0;
+}
+
+.search-bar input[type="search"] {
+    border: none;
+    outline: none;
+    padding: 0.6rem 0.5rem 0.6rem 0;
+    font-size: 0.9rem;
+    flex-grow: 1; /* Cho phép input co giãn */
+    min-width: 200px;
+    background: transparent;
+}
+
+.search-bar button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    border-radius: 0 20px 20px 0;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+}
+
+/* --- Menu thả xuống (Dropdown Menu) --- */
+header nav ul li.dropdown {
+    position: relative;
+}
+
+header nav ul .dropdown-menu {
+    display: none; /* Ẩn mặc định */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    min-width: 220px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 0 0 8px 8px;
+    padding: 0.5rem 0;
+    z-index: 101;
+    list-style: none;
+    border-top: 3px solid var(--primary-color);
+}
+
+/* Hiện menu khi hover vào mục cha */
+header nav ul li.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+header nav ul .dropdown-menu li {
+    margin: 0;
+}
+
+header nav ul .dropdown-menu li a {
+    display: block;
+    padding: 0.8rem 1.5rem;
+    color: var(--dark-color);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 0.95rem;
+}
+
+header nav ul .dropdown-menu li a:hover {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+
+/* ===================================================================
+   3. HERO SECTION
+   - Khu vực banner chính ngay dưới header.
+   =================================================================== */
+.hero {
+    background: url('../images/BGXanh.jpg') no-repeat center center/cover;
+    height: 70vh; /* Chiều cao chiếm 70% chiều cao màn hình */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Lớp phủ màu tối để làm nổi bật chữ */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+
+.hero .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative; /* Đặt lên trên lớp phủ */
+    z-index: 2;
+    width: 100%;
+}
+
+.hero-content {
+    text-align: left;
+    max-width: 65%;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7); /* Đổ bóng cho chữ */
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+
+/* ===================================================================
+   4. CÁC SECTION TRÊN TRANG CHỦ
+   - Featured Plants (Sản phẩm nổi bật), About Us (Giới thiệu).
+   =================================================================== */
+
+/* --- Khu vực sản phẩm nổi bật --- */
+.featured-plants {
+    padding: 4rem 0;
+    background-color: var(--light-color);
+}
+
+.featured-plants .container {
+     max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.plant-grid {
+    display: grid;
+    /* Tạo các cột tự động với chiều rộng tối thiểu 250px */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.plant-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plant-card:hover {
+    transform: translateY(-10px); /* Hiệu ứng nhấc lên khi hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.plant-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* Cắt ảnh vừa khung, không bị méo */
+}
+
+.plant-card h3 {
+    margin: 1rem 0 0.5rem;
+    color: var(--primary-color);
+}
+
+.plant-card p {
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    min-height: 60px; /* Giữ chiều cao cố định cho mô tả */
+}
+
+/* --- Khu vực giới thiệu (About Us) --- */
+.about-us {
+    padding: 5rem 0;
+    background-color: #f0f2f5;
+}
+.about-us .container {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.about-text-content {
+    flex: 1; /* Chiếm phần không gian còn lại */
+    min-width: 300px;
+    text-align: left;
+    padding-right: 1rem;
+}
+.about-us h2 {
+    text-align: left;
+    color: #3a4a3a;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+}
+.about-text-content p {
+     margin-bottom: 1.5rem;
+     line-height: 1.8;
+     color: #444;
+}
+.about-text-content .btn {
+     margin-top: 1.5rem;
+}
+.about-image-container {
+    flex: 1;
+    min-width: 300px;
+    min-height: 450px;
+    background-image: url('../images/Xanh.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+}
+
+/* --- Khu vực thư viện ảnh (Image Gallery) --- */
+.image-gallery-section {
+    padding: 2rem 0;
+    background-color: #ffffff;
+}
+
+.image-gallery-section h2 {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.gallery-grid {
+    display: grid;
+    gap: 1rem; /* Khoảng cách giữa các ảnh */
+}
+
+.mini-gallery-grid {
+    /* Tạo grid responsive với các cột tự động, tối thiểu 120px */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.gallery-item {
+    border-radius: 8px;
+    overflow: hidden; /* Đảm bảo ảnh bên trong cũng được bo góc */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    aspect-ratio: 1 / 1; /* Giữ tỷ lệ khung hình vuông */
+    position: relative;
+    background-color: #f0f0f0; /* Màu nền chờ ảnh tải */
+}
+
+.gallery-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cắt ảnh vừa với khung, không bị méo */
+    transition: transform 0.3s ease;
+}
+
+
+/* ===================================================================
+   5. FOOTER
+   - Style cho phần chân trang.
+   =================================================================== */
+footer {
+    background-color: #fff;
+    color: var(--text-color);
+    padding: 3rem 0 0;
+    margin-top: 3rem;
+    border-top: 1px solid #eee;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 2rem;
+}
+
+.footer-column h4 {
+    font-family: var(--heading-font);
+    color: var(--dark-color);
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+/* Gạch chân nhỏ dưới tiêu đề cột footer */
+.footer-column h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.footer-column p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.7rem;
+}
+
+.footer-column ul li a {
+    color: var(--text-color);
+    transition: color 0.3s ease;
+    font-size: 0.95rem;
+    display: inline-flex; /* Quan trọng: Dùng flex để căn chỉnh icon và chữ */
+    align-items: center;  /* Quan trọng: Căn icon và chữ theo chiều dọc */
+    gap: 8px;             /* Quan trọng: Khoảng cách giữa icon và chữ */
+}
+
+.footer-column ul li a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Style cho các icon (Font Awesome, etc.) */
+.footer-column ul li a i {
+    color: var(--primary-color);
+    width: 1.1em;
+    text-align: center;
+    flex-shrink: 0; /* Ngăn icon bị co lại */
+}
+
+/* Style riêng cho ảnh social (ví dụ Zalo) */
+.footer-column ul li a img.social-icon {
+    width: 1.1em;
+    height: 1.1em;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.footer-bottom {
+    text-align: center;
+}
+
+/* Dùng Flexbox để căn chỉnh icon trong Footer */
+.social-links-list li,
+.social-links-list li a {
+  display: flex;         /* Bật Flexbox cho thẻ <li> và <a> */
+  align-items: center;   /* Tự động canh giữa mọi thứ bên trong theo chiều dọc */
+}
+
+.social-icon {
+  margin-right: 8px;     /* Thêm khoảng cách giữa icon và chữ */
+}
+
+/* ===================================================================
+   6. TRANG CHI TIẾT SẢN PHẨM 
+   =================================================================== */
+.product-detail-main {
+    padding: 4rem 0;
+    background-color: #fff;
+}
+
+.product-detail-layout {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.product-image-column {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.product-image-column img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: block;
+}
+
+.product-info-column {
+    flex: 1.5; /* Chiếm nhiều không gian hơn cột ảnh */
+    min-width: 320px;
+    text-align: left;
+}
+
+.product-info-column h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+    font-family: var(--heading-font);
+    line-height: 1.3;
+    text-align: left;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.product-description {
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.product-description h3 {
+    font-size: 1.3rem;
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+    color: #444;
+    font-family: var(--body-font);
+    font-weight: bold;
+    text-align: left;
+}
+
+.product-description ul {
+    list-style: disc; /* Dùng dấu chấm đầu dòng */
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.product-description ul li {
+    margin-bottom: 0.5rem;
+}
+
+
+/* ===================================================================
+   7. TRANG DANH MỤC SẢN PHẨM 
+   =================================================================== */
+.category-main {
+    padding: 3rem 0 4rem;
+}
+
+.category-main .container > h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+}
+
+/* Khu vực bộ lọc */
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background-color: var(--light-color);
+    border-radius: 8px;
+    align-items: flex-end; /* Căn các item xuống dưới */
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 180px; /* co giãn, cơ sở 180px */
+    min-width: 180px;
+}
+
+.filter-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--dark-color);
+}
+
+.filter-group select {
+    padding: 0.7rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    background-color: #fff;
+    width: 100%;
+    cursor: pointer;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Thanh tìm kiếm riêng cho trang danh mục */
+.category-search-bar {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    flex: 1 1 250px;
+    min-width: 250px;
+    height: fit-content;
+    align-self: flex-end;
+}
+
+.category-search-bar input[type="search"] {
+    border: none;
+    outline: none;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    flex-grow: 1;
+    min-width: 100px;
+}
+
+.category-search-bar button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease;
+}
+
+.category-search-bar button:hover {
+    background-color: var(--primary-color);
+}
+
+/* Tiêu đề phần kết quả */
+.category-results h2 {
+    text-align: left;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    color: var(--dark-color);
+}
+
+
+/* ===================================================================
+   8. TRANG KẾT QUẢ TÌM KIẾM (search.html)
+   =================================================================== */
+.search-page-main {
+    padding: 3rem 0 4rem;
+}
+
+.search-page-main .container > h1 {
+     text-align: center;
+     margin-bottom: 3rem;
+     color: var(--primary-color);
+}
+
+/* Bố cục 2 cột: sidebar và nội dung chính */
+.search-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* Sidebar 250px, còn lại cho kết quả */
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+/* Sidebar bên trái */
+.search-sidebar {
+    background-color: var(--light-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    height: fit-content; /* Chiều cao tự động theo nội dung */
+}
+
+.search-sidebar h3 {
+    font-family: var(--body-font);
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+    color: var(--primary-color);
+    text-align: left;
+}
+
+.category-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.category-list li {
+    margin-bottom: 0.8rem;
+}
+
+.category-list a {
+    color: var(--text-color);
+    display: block;
+    padding: 0.6rem 0.9rem;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.category-list a:hover {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+/* Style cho danh mục đang được chọn (active) */
+.category-list li.active a {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Khu vực hiển thị kết quả tìm kiếm */
+.search-results h2 {
+    text-align: left;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    color: var(--dark-color);
+    font-family: var(--body-font);
+    font-weight: 600;
+}
+
+/* Tái sử dụng grid sản phẩm từ trang chủ */
+.search-results .plant-grid {
+    margin-top: 0;
+}
+
+/* Thông báo khi không tìm thấy kết quả */
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #888;
+    font-size: 1.1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+
+/* ===================================================================
+   9. RESPONSIVE DESIGN (Thiết kế đáp ứng)
+   - Sử dụng Media Queries để điều chỉnh layout trên các kích thước
+     màn hình khác nhau (Tablet, Mobile).
+   =================================================================== */
+
+/* --- Màn hình Tablet lớn (<= 992px) --- */
+@media (max-width: 992px) {
+     header nav ul li { margin-left: 1.5rem; }
+     .search-bar { margin-left: 1.5rem; }
+     .search-bar input[type="search"] { min-width: 150px; }
+
+     .hero-content { max-width: 75%; }
+
+     .about-us .container { gap: 2rem; }
+     .about-image-container { min-height: 400px; }
+
+     .search-layout {
+        grid-template-columns: 200px 1fr;
+        gap: 2rem;
+    }
+}
+
+/* --- Màn hình Tablet nhỏ & Mobile ngang (<= 768px) --- */
+@media (max-width: 768px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+
+    /* Header: Chuyển sang layout dọc */
+    header .container { flex-direction: column; text-align: center; padding: 0 20px; max-width: 100%; }
+    header .logo { margin-bottom: 0.5rem; margin-left: 0; }
+    header nav { width: 100%; margin-top: 0.5rem; margin-left: 0; justify-content: center; }
+    header nav ul { justify-content: center; flex-wrap: wrap; }
+    header nav ul li { margin: 0.3rem 0.8rem; }
+    header nav ul li:first-child { margin-left: 0.8rem; }
+    .search-bar { margin-left: 0; margin-top: 1rem; width: 100%; order: 3; justify-content: space-between; flex-shrink: 1; }
+    .search-bar input[type="search"] { min-width: 100px; flex-grow: 1; }
+
+    /* Hero: Căn giữa nội dung */
+    .hero { height: 60vh; justify-content: center; }
+    .hero .container { padding: 0 15px; }
+    .hero-content { max-width: 90%; text-align: center; margin-left: auto; margin-right: auto; }
+    .hero-content h1 { font-size: 2.8rem; }
+    .hero-content p { font-size: 1.1rem; }
+
+    .plant-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+
+    /* About Us: Chuyển sang layout dọc */
+    .about-us { padding: 3rem 0; }
+    .about-us .container { flex-direction: column; gap: 2rem; }
+    .about-text-content { padding-right: 0; text-align: center; }
+    .about-us h2 { text-align: center; font-size: 2rem; }
+    .about-image-container { min-height: 300px; width: 100%; }
+
+    /* Dropdown menu trên mobile */
+    header nav ul .dropdown-menu { position: static; box-shadow: none; border: none; background-color: #f0f0f0; padding: 0; min-width: auto; width: 100%; margin-top: 0.3rem; border-radius: 5px; }
+    header nav ul .dropdown-menu li a { padding: 0.7rem 1rem; font-size: 0.9rem; text-align: center; color: var(--dark-color); }
+    header nav ul .dropdown-menu li a:hover { background-color: var(--secondary-color); color: #fff; }
+
+    /* Trang chi tiết sản phẩm */
+    .product-detail-main { padding: 2.5rem 0; }
+    .product-detail-layout { gap: 2rem; flex-direction: column; }
+    .product-image-column { max-width: 100%; margin-bottom: 1rem; }
+    .product-info-column { flex-basis: 100%; min-width: unset; text-align: center; }
+    .product-info-column h1 { font-size: 2rem; text-align: center; }
+    .product-description h3 { text-align: center; }
+    .product-description ul { margin-left: 0; list-style-position: inside; text-align: left; }
+
+    /* Trang danh mục */
+    .filters-container { padding: 1rem; gap: 1rem; }
+    .filter-group, .category-search-bar { flex-basis: calc(50% - 0.5rem); min-width: unset; }
+
+    /* Trang tìm kiếm */
+    .search-page-main { padding: 2rem 0 3rem; }
+    .search-page-main .container > h1 { margin-bottom: 2rem; }
+    .search-layout { grid-template-columns: 1fr; gap: 0; margin-top: 1.5rem; }
+    .search-sidebar { margin-bottom: 2.5rem; }
+    .search-results h2 { text-align: center; margin-bottom: 1.5rem; font-size: 1.6rem; }
+}
+
+/* --- Màn hình Mobile nhỏ (<= 576px) --- */
+@media (max-width: 576px) {
+    /* Trang danh mục */
+    .filters-container { flex-direction: column; align-items: stretch; }
+    .filter-group, .category-search-bar { flex-basis: auto; width: 100%; }
+    .category-search-bar { margin-top: 0.5rem; }
+}
+
+
+/* --- Màn hình Mobile rất nhỏ (<= 480px) --- */
+@media (max-width: 480px) {
+    h1 { font-size: 1.8rem; }
+    .hero p { font-size: 1rem; }
+    .hero-content h1 { font-size: 2.2rem; }
+    .hero-content p { font-size: 1rem; }
+
+    header nav ul li { margin: 0.2rem 0.5rem; }
+    header nav ul li:first-child { margin-left: 0.5rem; }
+    header nav ul li a { font-size: 0.9rem; }
+    .search-bar input[type="search"] { min-width: 80px; font-size: 0.85rem; }
+    .search-bar button { padding: 0.5rem 0.8rem; }
+
+    /* Hiển thị 1 sản phẩm mỗi hàng */
+    .plant-grid { grid-template-columns: 1fr; }
+
+    .about-image-container { min-height: 250px; }
+}
+
