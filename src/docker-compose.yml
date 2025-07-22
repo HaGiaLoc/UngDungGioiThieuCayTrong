@@ -6,7 +6,7 @@ services:
     container_name: mysql_db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE:
+      MYSQL_DATABASE: greengarden
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
