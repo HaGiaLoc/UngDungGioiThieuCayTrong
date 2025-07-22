@@ -4,7 +4,7 @@ const cors = require('cors');
 const { connectDB } = require('./config/database');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Khi truy cập root, tự động chuyển hướng sang Swagger UI
 app.get('/', (req, res) => {
