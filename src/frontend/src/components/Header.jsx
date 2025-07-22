@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Import hình ảnh từ thư mục assets
 import zaloIcon from '../assets/images/zalo02.png';
@@ -7,6 +7,17 @@ import facebookIcon from '../assets/images/facebook02.png';
 import instagramIcon from '../assets/images/Instagram02.png';
 
 function Header() {
+  const navigate = useNavigate();
+
+  // Hàm xử lý việc tìm kiếm
+  const handleSearch = (event) => {
+    event.preventDefault(); // Ngăn form reload lại trang
+    const keyword = event.target.elements.keyword.value;
+    if (keyword) {
+      navigate(`/tim-kiem?keyword=${keyword}`); // Điều hướng đến trang tìm kiếm với query
+    }
+  };
+
   return (
     <header>
       <div className="container">
@@ -59,6 +70,13 @@ function Header() {
             </li>
           </ul>
         </nav>
+        <div className="search-bar">
+          {/* Thay thế form action bằng hàm onSubmit của React */}
+          <form onSubmit={handleSearch} style={{ display: 'contents' }}>
+            <input type="search" name="keyword" placeholder="Tìm kiếm cây..." />
+            <button type="submit">🔍</button>
+          </form>
+        </div>
       </div>
     </header>
   );

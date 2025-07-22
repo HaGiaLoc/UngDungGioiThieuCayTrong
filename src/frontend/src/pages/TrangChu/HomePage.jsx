@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Import hình ảnh
@@ -7,7 +7,26 @@ import luoiHoImg from '../../assets/images/Lh.jpg';
 import trauBaImg from '../../assets/images/Tb.jpg';
 // about-image-container đang trống, bạn có thể thêm ảnh nền qua CSS hoặc dùng thẻ img
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function HomePage() {
+  const [plants, setPlants] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    fetch(`${API_URL}/api/plants?featured=true`)
+      .then(res => {
+        if (!res.ok) throw new Error('Lỗi khi lấy dữ liệu');
+        return res.json();
+      })
+      .then(data => setPlants(data))
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <>
       <section className="hero">
@@ -36,51 +55,24 @@ function HomePage() {
       <section id="featured-plants" className="featured-plants">
         <div className="container">
           <h2>Cây Trồng Nổi Bật</h2>
-          <div className="plant-grid">
-            <div className="plant-card">
-              <img src={kimTienImg} alt="Cây Kim Tiền" />
-              <h3>Cây Kim Tiền</h3>
-              <p>Mang lại may mắn, tài lộc, dễ chăm sóc, phù hợp với văn phòng và nhà ở.</p>
-              {/* Giả sử bạn sẽ có trang chi tiết với id là 1 */}
-              <Link to="/chi-tiet/1" className="btn btn-secondary">Chi Tiết</Link>
+          {loading ? (
+            <p>Đang tải dữ liệu...</p>
+          ) : error ? (
+            <p className="no-results">Lỗi: {error}</p>
+          ) : plants.length > 0 ? (
+            <div className="plant-grid">
+              {plants.map(plant => (
+                <div className="plant-card" key={plant.id}>
+                  <img src={plant.image} alt={plant.name} />
+                  <h3>{plant.name}</h3>
+                  <p>{plant.description}</p>
+                  <Link to={`/chi-tiet/${plant.id}`} className="btn btn-secondary">Xem Chi Tiết</Link>
+                </div>
+              ))}
             </div>
-
-            <div className="plant-card">
-              <img src={luoiHoImg} alt="Cây Lưỡi Hổ" />
-              <h3>Cây Lưỡi Hổ</h3>
-              <p>Thanh lọc không khí hiệu quả, chịu hạn tốt, kiểu dáng hiện đại.</p>
-              <Link to="/chi-tiet/2" className="btn btn-secondary">Xem Chi Tiết</Link>
-            </div>
-
-            <div className="plant-card">
-              <img src={trauBaImg} alt="Cây Trầu Bà" />
-              <h3>Cây Trầu Bà</h3>
-              <p>Dạng dây leo đẹp mắt, dễ trồng trong nước hoặc đất, hút bức xạ điện tử.</p>
-              <Link to="/chi-tiet/3" className="btn btn-secondary">Xem Chi Tiết</Link>
-            </div>
-
-            <div className="plant-card">
-              {/* Hình ảnh từ placeholder không cần import */}
-              <img src="https://via.placeholder.com/300x250/2E8B57/FFFFFF?text=Cây+Bàng+Singapore" alt="Cây Bàng Singapore" />
-              <h3>Cây Bàng Singapore</h3>
-              <p>Kiểu dáng sang trọng, lá to bản, biểu tượng cho sự phát triển.</p>
-              <Link to="/chi-tiet/4" className="btn btn-secondary">Xem Chi Tiết</Link>
-            </div>
-
-            <div className="plant-card">
-              <img src="https://via.placeholder.com/300x250/90EE90/000000?text=Cây+Kim+Tiền" alt="Cây" />
-              <h3>Cây 4</h3>
-              <p></p>
-              <Link to="/chi-tiet/5" className="btn btn-secondary">Xem Chi Tiết</Link>
-            </div>
-
-            <div className="plant-card">
-              <img src="https://via.placeholder.com/300x250/90EE90/000000?text=Cây+Kim+Tiền" alt="Cây" />
-              <h3>Cây 5</h3>
-              <p></p>
-              <Link to="/chi-tiet/6" className="btn btn-secondary">Xem Chi Tiết</Link>
-            </div>
-          </div>
+          ) : (
+            <p className="no-results">Không có cây nổi bật nào.</p>
+          )}
         </div>
       </section>
     </>

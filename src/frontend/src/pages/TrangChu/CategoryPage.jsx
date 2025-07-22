@@ -1,18 +1,9 @@
 // src/pages/TrangChu/CategoryPage.jsx
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import PlantCard from '../../components/PlantCard.jsx';
 
-// Dữ liệu giả lập cho tất cả các cây trong danh mục
-// Khi có backend, bạn sẽ fetch (tải) danh sách này một lần khi trang được mở
-const allPlants = [
-  { id: 8, name: 'Cây Kim Ngân', description: 'Mang ý nghĩa may mắn, tài lộc, phù hợp để bàn làm việc.', category: 'de-ban', image: 'https://via.placeholder.com/300x250/90EE90/000000?text=Cây+Để+Bàn+1' },
-  { id: 9, name: 'Cây Phát Lộc', description: 'Biểu tượng của sự may mắn, sức sống mãnh liệt, dễ chăm sóc.', category: 'phong-thuy', image: 'https://via.placeholder.com/300x250/8FBC8F/000000?text=Cây+Phong+Thủy+1' },
-  { id: 10, name: 'Cây Thường Xuân', description: 'Leo bám đẹp mắt, tượng trưng cho tình yêu và sự trường tồn.', category: 'day-leo', image: 'https://via.placeholder.com/300x250/98FB98/000000?text=Cây+Dây+Leo+1' },
-  { id: 11, name: 'Cây Lan Ý', description: 'Hoa trắng thanh khiết, sống tốt trong điều kiện ít ánh sáng.', category: 'ua-bong', image: 'https://via.placeholder.com/300x250/66CDAA/000000?text=Cây+Ưa+Bóng+1' },
-  { id: 12, name: 'Xương Rồng Tai Thỏ', description: 'Hình dáng ngộ nghĩnh, dễ thương, chịu hạn cực tốt.', category: 'xuong-rong', image: 'https://via.placeholder.com/300x250/F4A460/000000?text=Xương+Rồng+1' },
-  { id: 13, name: 'Sen Đá Kim Cương', description: 'Lá mọng nước, màu sắc đẹp, biểu tượng cho tình yêu vĩnh cửu.', category: 'sen-da', image: 'https://via.placeholder.com/300x250/B0E0E6/000000?text=Sen+Đá+1' }
-];
+const API_URL = import.meta.env.VITE_API_URL;
 
 function CategoryPage() {
   // Dùng useState để lưu trữ giá trị của các bộ lọc
@@ -24,6 +15,29 @@ function CategoryPage() {
     keyword: ''
   });
 
+  // Thêm state cho danh sách cây
+  const [plants, setPlants] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    let url = `${API_URL}/api/plants`;
+    const params = [];
+    if (filters.category) params.push(`category=${encodeURIComponent(filters.category)}`);
+    if (filters.keyword) params.push(`keyword=${encodeURIComponent(filters.keyword)}`);
+    if (params.length > 0) url += `?${params.join('&')}`;
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error('Lỗi khi lấy dữ liệu');
+        return res.json();
+      })
+      .then(data => setPlants(data))
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
+  }, [filters]);
+
   // Hàm này sẽ được gọi mỗi khi giá trị của một bộ lọc thay đổi
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
@@ -34,15 +48,7 @@ function CategoryPage() {
   };
 
   // Dùng useMemo để chỉ tính toán lại danh sách cây khi filters hoặc allPlants thay đổi
-  const filteredPlants = useMemo(() => {
-    // Trong một ứng dụng thực tế, bạn sẽ viết logic lọc phức tạp ở đây
-    // Ví dụ đơn giản: lọc theo category và keyword
-    return allPlants.filter(plant => {
-      const matchCategory = filters.category ? plant.category === filters.category : true;
-      const matchKeyword = filters.keyword ? plant.name.toLowerCase().includes(filters.keyword.toLowerCase()) : true;
-      return matchCategory && matchKeyword;
-    });
-  }, [filters]); // Phụ thuộc vào filters
+  const filteredPlants = plants;
 
   return (
     <main className="category-main">
@@ -115,10 +121,12 @@ function CategoryPage() {
                 />
               ))}
             </div>
+          ) : loading ? (
+            <p>Đang tải dữ liệu...</p>
+          ) : error ? (
+            <p className="no-results">Lỗi: {error}</p>
           ) : (
-            <div className="no-results-message" style={{ marginTop: '2rem', textAlign: 'center' }}>
-              <p>Không tìm thấy cây nào phù hợp với tiêu chí của bạn.</p>
-            </div>
+            <p className="no-results">Không tìm thấy cây nào phù hợp.</p>
           )}
         </section>
       </div>
