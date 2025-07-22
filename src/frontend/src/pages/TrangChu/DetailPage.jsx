@@ -1,6 +1,6 @@
 // src/pages/TrangChu/DetailPage.jsx
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 // Import hình ảnh (giả sử bạn đã đặt chúng trong assets)
@@ -8,67 +8,30 @@ import kimTienImg from '../../assets/images/Kt.jpg';
 import luoiHoImg from '../../assets/images/Lh.jpg';
 import trauBaImg from '../../assets/images/Tb.jpg';
 
-// Dữ liệu giả lập cho tất cả các cây, bao gồm chi tiết
-// Khi có backend, bạn sẽ gọi API вида `getPlantById(plantId)` để lấy dữ liệu này
-const allPlantsData = [
-  {
-    id: '1', // ID phải là chuỗi để khớp với useParams
-    name: 'Cây Kim Tiền',
-    mainImage: kimTienImg,
-    gallery: [kimTienImg],
-    description: 'Cây Kim Tiền là loại cây cảnh phong thủy được ưa chuộng với những tán lá xanh bóng, mọc đối xứng và dày dặn, biểu tượng cho sự giàu sang và thịnh vượng.',
-    features: [
-      'Lá xanh bóng, mọc đều hai bên thân cây',
-      'Thân cây mọng nước, có khả năng trữ nước tốt',
-      'Sống tốt trong môi trường ánh sáng yếu hoặc phòng điều hòa',
-      'Là loại cây phong thủy hút tài lộc, may mắn',
-      'Dễ trồng và chăm sóc, phù hợp cho văn phòng và nhà ở',
-    ],
-    care: {
-      light: 'Ưa sáng nhẹ, tránh ánh nắng gắt trực tiếp, có thể đặt trong nhà hoặc phòng làm việc',
-      water: 'Tưới 1-2 lần mỗi tuần, tránh để đất quá ẩm dễ gây úng',
-      soil: 'Đất tơi xốp, thoát nước tốt, có thể trộn với xơ dừa hoặc sỏi nhẹ',
-      temp: 'Thích hợp với nhiệt độ từ 18-30°C, tránh để cây nơi quá lạnh hoặc gió mạnh',
-    }
-  },
-  // Thêm dữ liệu cho các cây khác để kiểm tra tính năng động
-  {
-    id: '2',
-    name: 'Cây Lưỡi Hổ',
-    mainImage: luoiHoImg,
-    gallery: [luoiHoImg],
-    description: 'Cây Lưỡi Hổ nổi tiếng với khả năng thanh lọc không khí vượt trội, hấp thụ các chất độc hại và cung cấp oxy vào ban đêm.',
-    features: ['Thanh lọc không khí hiệu quả', 'Chịu hạn tốt, ít cần tưới nước', 'Kiểu dáng hiện đại, tối giản'],
-    care: { light: 'Sống tốt trong nhiều điều kiện ánh sáng, từ yếu đến mạnh', water: 'Chỉ tưới khi đất khô hoàn toàn', soil: 'Đất thoát nước tốt', temp: 'Chịu được biên độ nhiệt độ rộng' }
-  },
-  {
-    id: '3',
-    name: 'Cây Trầu Bà',
-    mainImage: trauBaImg,
-    gallery: [trauBaImg],
-    description: 'Là loại cây dây leo phổ biến, dễ trồng trong cả đất và nước, có khả năng hút các bức xạ từ thiết bị điện tử.',
-    features: ['Dạng dây leo đẹp mắt', 'Có thể trồng trong đất hoặc thủy sinh', 'Hút bức xạ điện tử'],
-    care: { light: 'Ưa bóng râm, tránh nắng trực tiếp', water: 'Giữ đất ẩm nhưng không sũng nước', soil: 'Đất tơi xốp', temp: 'Nhiệt độ phòng bình thường' }
-  }
-];
+const API_URL = import.meta.env.VITE_API_URL;
 
 function DetailPage() {
-  // Dùng hook useParams để lấy giá trị của 'plantId' từ URL
   const { plantId } = useParams();
+  const [plant, setPlant] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Tìm cây trong mảng dữ liệu có id tương ứng
-  const plant = allPlantsData.find(p => p.id === plantId);
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    fetch(`${API_URL}/api/plants/${plantId}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Lỗi khi lấy dữ liệu');
+        return res.json();
+      })
+      .then(data => setPlant(data))
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
+  }, [plantId]);
 
-  // Xử lý trường hợp không tìm thấy cây (URL không hợp lệ)
-  if (!plant) {
-    return (
-      <div className="container" style={{ textAlign: 'center', padding: '50px' }}>
-        <h1>404 - Không tìm thấy sản phẩm</h1>
-        <p>Rất tiếc, cây bạn đang tìm kiếm không tồn tại.</p>
-        <Link to="/" className="btn btn-primary">Quay về Trang Chủ</Link>
-      </div>
-    );
-  }
+  if (loading) return <p>Đang tải dữ liệu...</p>;
+  if (error) return <p>Lỗi: {error}</p>;
+  if (!plant) return <p>Không tìm thấy cây.</p>;
 
   // Nếu tìm thấy cây, render ra giao diện chi tiết
   return (

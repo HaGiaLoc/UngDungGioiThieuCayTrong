@@ -1,12 +1,25 @@
 // src/pages/QuanTri/PlantsAdminPage.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 function PlantsAdminPage() {
-  // Dữ liệu này sau sẽ được lấy từ API
-  const plantsData = [
-    { id: 1, name: 'Cây Kim Tiền', category: 'Cây Phong Thủy', status: 'Hiển thị' },
-    { id: 2, name: 'Cây Trầu Bà', category: 'Cây Dây Leo', status: 'Đã ẩn' },
-  ];
+  const [plantsData, setPlantsData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    fetch(`${API_URL}/api/plants`)
+      .then(res => {
+        if (!res.ok) throw new Error('Lỗi khi lấy dữ liệu');
+        return res.json();
+      })
+      .then(data => setPlantsData(data))
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div id="plants" className="content-page active">
@@ -28,10 +41,10 @@ function PlantsAdminPage() {
               <tr><th>ID</th><th>Ảnh</th><th>Tên Cây</th><th>Danh Mục</th><th>Trạng Thái</th><th>Hành Động</th></tr>
             </thead>
             <tbody>
-              {plantsData.map(plant => (
+              {plantsData.length > 0 ? plantsData.map(plant => (
                 <tr key={plant.id}>
                   <td data-label="id">{plant.id}</td>
-                  <td data-label="anh"><img src="https://via.placeholder.com/50x50/90EE90/000?text=Cây" alt="Ảnh" className="table-img" /></td>
+                  <td data-label="anh"><img src={plant.image || "https://via.placeholder.com/50x50/90EE90/000?text=Cây"} alt="Ảnh" className="table-img" /></td>
                   <td data-label="ten">{plant.name}</td>
                   <td data-label="danhmuc">{plant.category}</td>
                   <td data-label="trangthai">
@@ -47,7 +60,13 @@ function PlantsAdminPage() {
                     <button className="btn btn-sm btn-delete-plant">Xóa</button>
                   </td>
                 </tr>
-              ))}
+              )) : loading ? (
+                <tr><td colSpan="6">Đang tải dữ liệu...</td></tr>
+              ) : error ? (
+                <tr><td colSpan="6">Lỗi: {error}</td></tr>
+              ) : (
+                <tr><td colSpan="6">Không có dữ liệu.</td></tr>
+              )}
             </tbody>
           </table>
         </div>

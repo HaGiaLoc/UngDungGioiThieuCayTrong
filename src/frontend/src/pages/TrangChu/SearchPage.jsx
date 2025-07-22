@@ -1,19 +1,12 @@
 // src/pages/TrangChu/SearchPage.jsx
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 
 // Tái sử dụng component PlantCard
 import PlantCard from '../../components/PlantCard.jsx';
 
-// Dữ liệu giả lập cho kết quả tìm kiếm
-// Sau này, bạn sẽ gọi API để lấy dữ liệu thật dựa trên từ khóa
-const sampleResults = [
-  { id: 1, name: 'Cây Kim Tiền', description: 'Mang lại may mắn, tài lộc, dễ chăm sóc.', image: 'https://via.placeholder.com/300x250/90EE90/000000?text=Cây+Kim+Tiền' },
-  { id: 2, name: 'Cây Lưỡi Hổ', description: 'Thanh lọc không khí hiệu quả, chịu hạn tốt.', image: 'https://via.placeholder.com/300x250/8FBC8F/000000?text=Cây+Lưỡi+Hổ' },
-  { id: 3, name: 'Cây Trầu Bà', description: 'Dạng dây leo đẹp mắt, dễ trồng.', image: 'https://via.placeholder.com/300x250/98FB98/000000?text=Cây+Trầu+Bà' },
-  { id: 7, name: 'Cây Kim Ngân', description: 'Biểu tượng cho sự giàu sang, phú quý.', image: 'https://via.placeholder.com/300x250/90EE90/000000?text=Cây+Kim+Ngân' }
-];
+const API_URL = import.meta.env.VITE_API_URL;
 
 function SearchPage() {
   // Hook của react-router-dom để đọc các tham số trên URL (ví dụ: ?keyword=...)
@@ -22,6 +15,29 @@ function SearchPage() {
   // Lấy giá trị của 'keyword' từ URL, nếu không có thì là chuỗi rỗng
   const keyword = searchParams.get('keyword') || '';
   const category = searchParams.get('category') || '';
+
+  // Thêm state cho kết quả tìm kiếm
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    let url = `${API_URL}/api/plants`;
+    const params = [];
+    if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
+    if (category) params.push(`category=${encodeURIComponent(category)}`);
+    if (params.length > 0) url += `?${params.join('&')}`;
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error('Lỗi khi lấy dữ liệu');
+        return res.json();
+      })
+      .then(data => setResults(data))
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
+  }, [keyword, category]);
 
   // Logic để quyết định tiêu đề hiển thị
   let title = 'Tất cả sản phẩm';
@@ -32,7 +48,7 @@ function SearchPage() {
   }
 
   // Logic hiển thị: Nếu có kết quả thì hiện lưới cây, không thì hiện thông báo
-  const hasResults = sampleResults.length > 0;
+  const hasResults = results.length > 0;
 
   return (
     // Phần header và footer đã được App.js quản lý, nên ta chỉ cần code phần main
@@ -66,10 +82,9 @@ function SearchPage() {
             {/* Dùng toán tử 3 ngôi để render có điều kiện */}
             {hasResults ? (
               <div className="plant-grid">
-                {/* Dùng hàm .map() để lặp qua mảng dữ liệu và render component */}
-                {sampleResults.map(plant => (
+                {results.map(plant => (
                   <PlantCard
-                    key={plant.id} // key là bắt buộc và phải là duy nhất
+                    key={plant.id}
                     id={plant.id}
                     image={plant.image}
                     name={plant.name}
@@ -77,6 +92,10 @@ function SearchPage() {
                   />
                 ))}
               </div>
+            ) : loading ? (
+              <p>Đang tải dữ liệu...</p>
+            ) : error ? (
+              <p className="no-results">Lỗi: {error}</p>
             ) : (
               <p className="no-results">
                 Rất tiếc, không tìm thấy cây nào phù hợp với tìm kiếm của bạn.
