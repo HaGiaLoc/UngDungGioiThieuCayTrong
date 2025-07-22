@@ -1,0 +1,952 @@
+/* === quantri.css === */
+/* 
+    CẤU TRÚC TỆP:
+    1. Reset & Thiết lập cơ bản
+    2. Layout chính (Admin Container, Sidebar, Main Content)
+    3. Các thành phần chung (Header, Section, Form, Bảng, Nút bấm,...)
+    4. Styles cho các trang cụ thể (Tổng quan, Đăng nhập)
+    5. Responsive Media Queries
+*/
+
+/* ================================================================
+   1. RESET & THIẾT LẬP CƠ BẢN
+================================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #343a40;
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+a:hover {
+    text-decoration: none;
+    color: #2a8cd1;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* ================================================================
+   2. LAYOUT CHÍNH
+================================================================ */
+
+/* --- 2.1. Admin Container --- */
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- 2.2. Sidebar --- */
+.admin-sidebar {
+    width: 240px;
+    background-image: url('../images/BGQuantri.png');
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow-y: auto;
+    box-shadow: 3px 0 8px rgba(44, 62, 80, 0.15);
+    z-index: 10;
+    border-right: 1px solid #3a5064;
+}
+
+.sidebar-header {
+    padding: 22px 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(236, 240, 241, 0.1);
+}
+
+.sidebar-header h2 {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.admin-nav {
+    flex-grow: 1;
+    padding-top: 20px;
+}
+
+.admin-nav ul {
+    padding: 0;
+    margin: 0;
+}
+
+/* ✅ SỬA ĐỔI: Gộp selector cho <a> và .logout-btn để dùng chung style */
+.admin-nav li a,
+.admin-nav li .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 25px;
+    color: #ffffff;
+    transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease, transform 0.2s ease;
+    border-left: 4px solid transparent;
+    text-decoration: none;
+    position: relative;
+    font-size: 0.95rem;
+    width: 100%; /* Đảm bảo button chiếm đủ chiều rộng */
+    text-align: left; /* Căn chữ cho button */
+}
+
+/* ✅ SỬA ĐỔI: Thêm các thuộc tính reset cho .logout-btn */
+.admin-nav li .logout-btn {
+    background: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    cursor: pointer;
+    font-family: inherit; /* Kế thừa font chữ */
+}
+
+/* ✅ SỬA ĐỔI: Gộp selector cho trạng thái :hover */
+.admin-nav li a:hover,
+.admin-nav li .logout-btn:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: #fff;
+    text-decoration: none;
+    transform: translateX(4px);
+    border-left-color: rgba(54, 162, 235, 0.5);
+}
+
+/* ✅ SỬA ĐỔI: Quy tắc cho icon (dùng class .sidebar-icon đã thêm trong JSX) */
+.sidebar-icon {
+    width: 20px;
+    text-align: center;
+    font-size: 1.1em;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* ✅ SỬA ĐỔI: Gộp selector cho :hover icon */
+.admin-nav li a:hover .sidebar-icon,
+.admin-nav li .logout-btn:hover .sidebar-icon {
+    transform: scale(1.1);
+}
+
+/* ✅ SỬA ĐỔI: class .active chỉ áp dụng cho thẻ <a> của NavLink */
+.admin-nav li a.active {
+    background-color: rgba(54, 162, 235, 0.15);
+    color: #fff;
+    font-weight: 600;
+    border-left-color: #36a2eb;
+}
+
+.admin-nav li a.active .sidebar-icon {
+    color: #36a2eb;
+    transform: scale(1.1);
+}
+
+
+/* --- 2.3. Main Content --- */
+.admin-content {
+    flex-grow: 1;
+    margin-left: 240px;
+    padding: 30px 35px;
+    overflow-x: hidden;
+    background-color: #f8f9fa;
+}
+
+.content-page { display: none; }
+.content-page.active {
+    display: block;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ... CÁC PHẦN CSS CÒN LẠI GIỮ NGUYÊN ... */
+/* ... (toàn bộ các mục 3, 4, 5 và modal styles) ... */
+
+/* --- 3.1. Content Header & Section --- */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.content-header h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin: 0;
+    font-weight: 700;
+}
+
+.content-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.09);
+    margin-bottom: 30px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+.content-section:hover {
+    box-shadow: 0 6px 18px rgba(44, 62, 80, 0.12);
+    transform: translateY(-4px);
+}
+
+.content-section h2 {
+     font-size: 1.6rem;
+     margin-bottom: 25px;
+     text-align: left;
+     color: #343a40;
+     padding-bottom: 15px;
+     border-bottom: 1px solid #e9ecef;
+     font-weight: 600;
+}
+
+/* --- 3.2. Form Styles --- */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px 30px;
+}
+
+.form-group { display: flex; flex-direction: column; }
+.form-group.form-group-full { grid-column: 1 / -1; }
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #495057;
+}
+.form-group label .required { color: #e74c3c; margin-left: 4px; font-weight: 700; }
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    background-color: #fff;
+}
+.form-group input[type="file"] { padding: 10px 12px; }
+.form-group textarea { resize: vertical; min-height: 80px; }
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #36a2eb;
+    box-shadow: 0 0 0 4px rgba(54, 162, 235, 0.15);
+    background-color: #fff;
+}
+
+.form-group input:not(:focus):hover,
+.form-group select:not(:focus):hover,
+.form-group textarea:not(:focus):hover {
+    border-color: #adb5bd;
+}
+
+.form-actions {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e9ecef;
+    text-align: right;
+}
+.form-actions button { margin-left: 12px; }
+
+/* --- 3.3. Table Styles --- */
+.table-responsive { overflow-x: auto; }
+
+.admin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    margin-top: 25px;
+    border: none;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 14px 18px;
+    text-align: left;
+    vertical-align: middle;
+    background-color: #fff;
+    border-bottom: 1px solid #f1f3f5;
+    border-top: 1px solid #f1f3f5;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.admin-table td:first-child, .admin-table th:first-child { border-left: 1px solid #f1f3f5; border-radius: 6px 0 0 6px; }
+.admin-table td:last-child, .admin-table th:last-child { border-right: 1px solid #f1f3f5; border-radius: 0 6px 6px 0; text-align: right; }
+
+.admin-table thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.9rem;
+    text-transform: none;
+    white-space: nowrap;
+    border-bottom: 2px solid #dee2e6;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+.admin-table tbody tr:hover td {
+    background-color: #eef7ff;
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    border-color: #d6eaff;
+    z-index: 1;
+    position: relative;
+}
+
+.table-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 12px;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.status {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    border: 1px solid;
+}
+.status-visible { background-color: #dff9e8; color: #1a7b3e; border-color: #b8e6c9; }
+.status-hidden { background-color: #fff8e1; color: #8a6d3b; border-color: #f8e5aa; }
+
+/* --- 3.4. Button Styles --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.btn i { font-size: 1.1em; }
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    filter: brightness(1.05);
+}
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    filter: brightness(0.95);
+}
+
+.btn-primary { background: linear-gradient(180deg, #3caeff, #36a2eb); color: #fff; border-color: #36a2eb; }
+.btn-primary:hover { background: linear-gradient(180deg, #4cb5ff, #3caeff); border-color: #2a8cd1; }
+.btn-secondary { background-color: #6c757d; color: #fff; border-color: #6c757d; }
+.btn-secondary:hover { background-color: #5a6268; border-color: #545b62; }
+.btn-success { background-color: #2ecb71; color: #fff; border-color: #2ecb71; }
+.btn-success:hover { background-color: #28a75a; border-color: #259a51; }
+.btn-danger { background-color: #dc3545; color: #fff; border-color: #dc3545; }
+.btn-danger:hover { background-color: #c82333; border-color: #bd2130; }
+.btn-warning { background-color: #ffc107; color: #212529; border-color: #ffc107; }
+.btn-warning:hover { background-color: #e0a800; border-color: #d39e00; }
+.btn-info { background-color: #17a2b8; color: #fff; border-color: #17a2b8; }
+.btn-info:hover { background-color: #138496; border-color: #117a8b; }
+.btn-light { background-color: #f8f9fa; color: #343a40; border: 1px solid #ced4da; }
+.btn-light:hover { background-color: #e9ecef; border-color: #ced4da; }
+.btn-dark { background-color: #343a40; color: #fff; border-color: #343a40; }
+.btn-dark:hover { background-color: #23272b; border-color: #1d2124; }
+.btn-cancel { background-color: #6c757d; color: #fff; border-color: #6c757d; }
+.btn-cancel:hover { background-color: #5a6268; border-color: #545b62; }
+
+.btn-sm { padding: 7px 14px; font-size: 0.8rem; }
+.btn-xs { padding: 5px 10px; font-size: 0.75rem; }
+
+.btn-edit-plant, .btn-edit-category { background-color: #ffc107; color: #212529; border-color: #ffc107; }
+.btn-delete-plant, .btn-delete-category { background-color: #dc3545; color: #fff; border-color: #dc3545; }
+.btn-hide { background-color: #ffc107; color: #212529; border-color: #ffc107; }
+.btn-show { background-color: #2ecb71; color: #fff; border-color: #2ecb71; }
+
+/* --- 3.5. List Filters & Pagination --- */
+.list-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    background-color: #fff;
+    border-radius: 6px;
+}
+.list-filters input[type="text"],
+.list-filters select {
+    padding: 10px 14px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    height: 42px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.list-filters input[type="text"]:focus,
+.list-filters select:focus {
+    outline: none;
+    border-color: #36a2eb;
+    box-shadow: 0 0 0 3px rgba(54, 162, 235, 0.15);
+}
+.list-filters input[type="text"] { min-width: 220px; }
+.list-filters select { min-width: 180px; }
+.list-filters button { height: 42px; padding: 10px 20px; }
+
+.pagination {
+    margin-top: 35px;
+    text-align: center;
+    padding-bottom: 15px;
+}
+.pagination a {
+    color: #5a6268;
+    background-color: #fff;
+    padding: 9px 15px;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    margin: 0 4px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    font-weight: 500;
+}
+.pagination a.active {
+    background-color: #36a2eb;
+    color: white;
+    border-color: #36a2eb;
+    font-weight: 600;
+    box-shadow: 0 3px 6px rgba(54, 162, 235, 0.2);
+    transform: translateY(-2px);
+}
+.pagination a:hover:not(.active) {
+    background-color: #e9ecef;
+    color: #343a40;
+    border-color: #ced4da;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* --- 3.6. Image Gallery --- */
+.image-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
+}
+.gallery-item {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background-color: #f8f9fa;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 2px 5px rgba(44, 62, 80, 0.07);
+}
+.gallery-item:hover {
+    transform: scale(1.04) translateY(-3px);
+    box-shadow: 0 6px 15px rgba(44, 62, 80, 0.12);
+    z-index: 5;
+}
+.gallery-item img {
+    display: block;
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.03);
+}
+
+.gallery-actions {
+    background: linear-gradient(0deg, rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.7));
+    color: #ecf0f1;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.gallery-item:hover .gallery-actions { opacity: 1; transform: translateY(0); }
+.gallery-actions .btn-xs {
+    background-color: rgba(220, 53, 69, 0.85);
+    border: none;
+    color: #fff;
+    transition: background-color 0.2s ease;
+    box-shadow: none;
+    border-radius: 4px;
+}
+.gallery-actions .btn-xs:hover { background-color: #dc3545; transform: none; }
+
+/* ================================================================
+   4. STYLES CHO CÁC TRANG CỤ THỂ
+================================================================ */
+
+/* --- 4.1. Trang Tổng quan (Dashboard) --- */
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+.stat-card {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.07);
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(44, 62, 80, 0.1);
+}
+.stat-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+.stat-card-info h3 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0 0 5px 0;
+}
+.stat-card-info p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+.chart-container {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+.chart-wrapper {
+    position: relative;
+    height: 350px;
+    width: 100%;
+    margin-top: auto;
+}
+
+/* --- 4.2. Trang Đăng nhập (Login) --- */
+body.login-page {
+    background-image: url('../images/BackGround.jpg');
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.login-box {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    animation: fadeInLogin 0.5s ease-out forwards;
+    opacity: 0;
+    display: flex;
+    overflow: hidden; 
+    border: 1px solid #e9ecef;
+}
+
+@keyframes fadeInLogin {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.login-form-area {
+    flex: 0 0 65%;
+    padding: 45px 50px;
+    text-align: left;
+    background-color: #ffffff;
+}
+.login-form-area h2 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+.login-form-area .subtitle {
+    margin-bottom: 35px;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+.login-form-area .form-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #495057;
+    margin-bottom: 8px;
+}
+.login-form-area input[type="text"],
+.login-form-area input[type="password"] {
+    padding: 14px 18px;
+    font-size: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    width: 100%;
+}
+.login-form-area input[type="text"]:focus,
+.login-form-area input[type="password"]:focus {
+    background-color: #fff;
+    border-color: #2ecc71;
+    box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.15);
+    outline: none;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+}
+.login-options .form-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.login-options label {
+    font-weight: 500;
+    color: #495057;
+    cursor: pointer;
+}
+.login-options input[type="checkbox"] {
+    accent-color: #2ecc71;
+}
+.login-options .forgot-password a {
+    color: #2ecc71;
+    font-weight: 500;
+    text-decoration: none;
+}
+.login-options .forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.login-form-area .btn-primary {
+    background: #2ecc71;
+    border-color: #2ecc71;
+    border-radius: 8px;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.login-form-area .btn-primary:hover {
+    background: #28b463;
+    border-color: #28b463;
+}
+
+.login-logo-area {
+    flex: 0 0 35%;
+    background: #ffffff; 
+    color: #343a40; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+    border-left: 1px solid #e9ecef;
+}
+.logo-image-container {
+    width: 130px;
+    height: 130px;
+    margin-bottom: 25px;
+}
+.logo-image-container img {
+    max-width: 100%;
+    height: auto;
+}
+.login-logo-area .logo-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50; 
+    margin: 0;
+    line-height: 1.2;
+}
+.login-logo-area .logo-subtitle {
+    font-size: 1rem;
+    color: #6c757d; 
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+/* ================================================================
+   5. RESPONSIVE
+================================================================ */
+@media (max-width: 992px) {
+    .admin-content { padding: 20px 15px; }
+    .content-header h1 { font-size: 1.7rem; }
+    .content-section h2 { font-size: 1.4rem; }
+    .dashboard-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+     .admin-sidebar { 
+        width: 0; 
+        padding: 0; 
+        overflow: hidden; 
+        border: none; 
+        box-shadow: none; 
+        transform: translateX(-100%);
+    }
+     .admin-content { 
+        margin-left: 0; 
+    }
+     .content-header { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 10px; 
+    }
+     .form-grid { grid-template-columns: 1fr; }
+     .list-filters { 
+        flex-direction: column; 
+        align-items: stretch; 
+        padding: 15px; 
+    }
+     .list-filters input, .list-filters select, .list-filters button { width: 100%; }
+     .admin-table td:last-child .btn { margin-bottom: 5px; }
+     .admin-table td:last-child .btn:last-child { margin-bottom: 0; }
+     
+    .login-box {
+        flex-direction: column;
+        max-width: 420px; 
+    }
+    .login-logo-area, .login-form-area {
+        flex-basis: auto;
+    }
+    .login-logo-area {
+        padding: 40px 25px;
+        border-left: none; 
+        border-top: 1px solid #e9ecef;
+    }
+    .login-form-area {
+        padding: 30px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-content { padding: 15px 10px; }
+    .content-header h1 { font-size: 1.5rem; }
+    .content-section { padding: 15px; }
+    .content-section h2 { font-size: 1.2rem; }
+    .admin-table th, .admin-table td { padding: 10px 10px; font-size: 0.8rem; }
+    .table-img { width: 40px; height: 40px; }
+    .btn { padding: 9px 15px; font-size: 0.85rem; }
+    .btn-sm { padding: 6px 12px; }
+
+    .login-box {
+        max-width: 90%;
+    }
+}
+/* 
+================================================================
+   --- MODAL STYLES (PHIÊN BẢN SỬA LỖI HIỂN THỊ) --- 
+================================================================
+*/
+
+.modal-overlay {
+    /* Luôn luôn là flex để căn giữa */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+
+    /* Dùng opacity và visibility để ẩn/hiện */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* Ngăn không cho click vào modal khi nó đang ẩn */
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+
+    /* Hiệu ứng chuyển động cho nền mờ */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Class .active sẽ kích hoạt modal */
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.modal-box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    
+    display: flex;
+    flex-direction: column;
+
+    /* Hiệu ứng trượt xuống và mờ dần cho box */
+    transform: translateY(-30px);
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+/* Khi modal active, box sẽ trượt vào vị trí */
+.modal-overlay.active .modal-box {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    border: none;
+    padding: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+}
+.modal-close:hover {
+    color: #2c3e50;
+}
+
+.modal-body {
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 20px 25px;
+    text-align: right;
+    border-top: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+    border-radius: 0 0 8px 8px;
+}
+
+.modal-footer .btn {
+    margin-left: 10px;
+}
+
+.modal-box.small-modal {
+    max-width: 450px;
+}
+
+.small-modal .modal-body p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+/* Dùng Flexbox để căn chỉnh icon trong Footer */
+.social-links-list li,
+.social-links-list li a {
+  display: flex;         /* Bật Flexbox cho thẻ <li> và <a> */
+  align-items: center;   /* Tự động canh giữa mọi thứ bên trong theo chiều dọc */
+}
+
+.social-icon {
+  margin-right: 8px;     /* Thêm khoảng cách giữa icon và chữ */
+}
+
