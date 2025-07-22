@@ -11,11 +11,25 @@ function Header() {
     <header>
       <div className="container">
         <div className="logo">
-          <Link to="/">��Green Garden</Link>
+          {/* Dùng Link của react-router-dom để điều hướng nội bộ */}
+          <Link to="/">🌿Green Garden</Link>
         </div>
         <nav>
           <ul>
             <li><Link to="/">Trang Chủ</Link></li>
+            <li className="dropdown">
+              <Link to="/danh-muc" className="dropdown-toggle">Danh Mục ▾</Link>
+              <ul className="dropdown-menu">
+                {/* Thay đổi các link để phù hợp với routing của React */}
+                <li><Link to="/tim-kiem?category=de-ban">Cây Để Bàn</Link></li>
+                <li><Link to="/tim-kiem?category=phong-thuy">Cây Phong Thủy</Link></li>
+                <li><Link to="/tim-kiem?category=day-leo">Cây Dây Leo</Link></li>
+                <li><Link to="/tim-kiem?category=ua-bong">Cây Ưa Bóng</Link></li>
+                <li><Link to="/tim-kiem?category=xuong-rong">Xương Rồng</Link></li>
+                <li><Link to="/tim-kiem?category=sen-da">Sen Đá</Link></li>
+              </ul>
+            </li>
+            {/* Các link dạng # có thể giữ nguyên thẻ a */}
             <li><a href="#featured-plants">Cây Nổi Bật</a></li>
             <li><a href="#about">Về Chúng Tôi</a></li>
             <li className="dropdown">

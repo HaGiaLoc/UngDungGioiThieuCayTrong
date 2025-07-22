@@ -39,6 +39,8 @@ function App() {
         {/* Các route cho trang người dùng sẽ sử dụng UserLayout chung */}
         <Route element={<UserLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/tim-kiem" element={<SearchPage />} />
+          <Route path="/danh-muc" element={<CategoryPage />} />
           <Route path="/chi-tiet/:plantId" element={<DetailPage />} />
         </Route>
 
