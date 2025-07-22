@@ -20,6 +20,7 @@ function SearchPage() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -39,6 +40,13 @@ function SearchPage() {
       .finally(() => setLoading(false));
   }, [keyword, category]);
 
+  useEffect(() => {
+    fetch(API_URL + '/api/categories')
+      .then(res => res.json())
+      .then(data => setCategories(data.filter(c => c.status === 'Hiển thị')))
+      .catch(() => setCategories([]));
+  }, []);
+
   // Logic để quyết định tiêu đề hiển thị
   let title = 'Tất cả sản phẩm';
   if (keyword) {
@@ -49,6 +57,7 @@ function SearchPage() {
 
   // Logic hiển thị: Nếu có kết quả thì hiện lưới cây, không thì hiện thông báo
   const hasResults = results.length > 0;
+  const visibleResults = results.filter(plant => plant.status === 'Hiển thị');
 
   return (
     // Phần header và footer đã được App.js quản lý, nên ta chỉ cần code phần main
@@ -63,13 +72,9 @@ function SearchPage() {
               <ul>
                 {/* Dùng <Link> để điều hướng, sau này có thể làm active động */}
                 <li><Link to="/tim-kiem">Tất cả cây</Link></li>
-                <li><Link to="/tim-kiem?category=de-ban">Cây Để Bàn</Link></li>
-                <li><Link to="/tim-kiem?category=phong-thuy">Cây Phong Thủy</Link></li>
-                <li><Link to="/tim-kiem?category=thanh-loc">Cây Thanh Lọc Không Khí</Link></li>
-                <li><Link to="/tim-kiem?category=day-leo">Cây Dây Leo</Link></li>
-                <li><Link to="/tim-kiem?category=chiu-han">Cây Chịu Hạn</Link></li>
-                <li><Link to="/tim-kiem?category=ua-bong">Cây Ưa Bóng</Link></li>
-                <li><Link to="/tim-kiem?category=xuong-rong">Xương Rồng & Sen Đá</Link></li>
+                {categories.map(cat => (
+                  <li key={cat.id}><Link to={`/tim-kiem?category=${encodeURIComponent(cat.name)}`}>{cat.name}</Link></li>
+                ))}
               </ul>
             </nav>
           </aside>
@@ -81,8 +86,8 @@ function SearchPage() {
 
             {/* Dùng toán tử 3 ngôi để render có điều kiện */}
             {hasResults ? (
-              <div className="plant-grid">
-                {results.map(plant => (
+              <div className="plant-grid" style={{gridTemplateColumns: 'repeat(5, 1fr)'}}>
+                {visibleResults.slice(0, 50).map(plant => (
                   <PlantCard
                     key={plant.id}
                     id={plant.id}

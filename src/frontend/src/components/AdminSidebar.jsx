@@ -17,10 +17,7 @@ function AdminSidebar() {
 
   // ✅ 3. TẠO HÀM XỬ LÝ VIỆC ĐĂNG XUẤT
   const handleLogout = () => {
-    console.log('Đã đăng xuất!');
-    // Trong tương lai, bạn sẽ thêm logic xóa token/session ở đây
-    
-    // Dùng navigate để chuyển hướng người dùng đến trang login
+    localStorage.removeItem('admin_token');
     navigate('/login');
   };
 

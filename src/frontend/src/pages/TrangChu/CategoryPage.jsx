@@ -48,7 +48,7 @@ function CategoryPage() {
   };
 
   // Dùng useMemo để chỉ tính toán lại danh sách cây khi filters hoặc allPlants thay đổi
-  const filteredPlants = plants;
+  const filteredPlants = plants.filter(plant => plant.status === 'Hiển thị');
 
   return (
     <main className="category-main">
@@ -106,12 +106,12 @@ function CategoryPage() {
           </div>
         </div>
 
-        <section className="category-results">
+        <section className="category-results" style={{border: '30px solid #f0f2f5', borderRadius: '20px', marginTop: '2rem', background: '#fff'}}>
           <h2>Kết quả lọc</h2>
           {/* Render có điều kiện: nếu có kết quả thì hiển thị, không thì báo */}
           {filteredPlants.length > 0 ? (
-            <div className="plant-grid">
-              {filteredPlants.map(plant => (
+            <div className="plant-grid" style={{gridTemplateColumns: 'repeat(5, 1fr)'}}>
+              {filteredPlants.slice(0, 50).map(plant => (
                 <PlantCard
                   key={plant.id}
                   id={plant.id}

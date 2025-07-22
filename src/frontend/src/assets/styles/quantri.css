@@ -478,66 +478,6 @@ img {
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* --- 3.6. Image Gallery --- */
-.image-gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 25px;
-    margin-top: 25px;
-}
-.gallery-item {
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    background-color: #f8f9fa;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 2px 5px rgba(44, 62, 80, 0.07);
-}
-.gallery-item:hover {
-    transform: scale(1.04) translateY(-3px);
-    box-shadow: 0 6px 15px rgba(44, 62, 80, 0.12);
-    z-index: 5;
-}
-.gallery-item img {
-    display: block;
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-.gallery-item:hover img {
-    transform: scale(1.05);
-    filter: brightness(1.03);
-}
-
-.gallery-actions {
-    background: linear-gradient(0deg, rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.7));
-    color: #ecf0f1;
-    padding: 8px 12px;
-    font-size: 0.85rem;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    opacity: 0;
-    transform: translateY(100%);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.gallery-item:hover .gallery-actions { opacity: 1; transform: translateY(0); }
-.gallery-actions .btn-xs {
-    background-color: rgba(220, 53, 69, 0.85);
-    border: none;
-    color: #fff;
-    transition: background-color 0.2s ease;
-    box-shadow: none;
-    border-radius: 4px;
-}
-.gallery-actions .btn-xs:hover { background-color: #dc3545; transform: none; }
-
 /* ================================================================
    4. STYLES CHO CÁC TRANG CỤ THỂ
 ================================================================ */
@@ -756,6 +696,36 @@ body.login-page {
     margin-top: 10px;
 }
 
+/* Khung đăng nhập mở rộng và bóng đẹp */
+.custom-login-box {
+  max-width: none;
+  width: 60vw;
+  min-width: 350px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 8px 32px 0 rgba(60, 120, 180, 0.18), 0 1.5px 8px 0 rgba(60, 120, 180, 0.10);
+  padding: 2.8rem 2.2rem;
+  transition: box-shadow 0.3s;
+}
+.custom-login-box:hover {
+  box-shadow: 0 16px 48px 0 rgba(60, 120, 180, 0.22), 0 3px 16px 0 rgba(60, 120, 180, 0.13);
+}
+
+/* Nút đăng nhập nổi bật hơn */
+.custom-login-btn {
+  background: linear-gradient(90deg, #43d167 0%, #2eb872 100%);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(67, 209, 103, 0.10);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.custom-login-btn:hover {
+  background: linear-gradient(90deg, #2eb872 0%, #43d167 100%);
+  box-shadow: 0 4px 16px rgba(67, 209, 103, 0.18);
+}
+
 /* ================================================================
    5. RESPONSIVE
 ================================================================ */
@@ -948,5 +918,70 @@ body.login-page {
 
 .social-icon {
   margin-right: 8px;     /* Thêm khoảng cách giữa icon và chữ */
+}
+
+/* Nút đỏ (Xóa, Sửa) cho admin */
+.btn-delete-image-category, .btn-edit-image-category, .btn-delete-plant, .btn-edit-plant, .btn-delete-category, .btn-edit-category {
+  min-width: 60px;
+  max-width: 90px;
+  padding: 6px 14px;
+  font-size: 1rem;
+  border-radius: 8px;
+  margin: 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.btn-delete-image-category, .btn-delete-plant, .btn-delete-category {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.btn-delete-image-category:hover, .btn-delete-plant:hover, .btn-delete-category:hover {
+  background: #c0392b;
+}
+.btn-edit-image-category, .btn-edit-plant, .btn-edit-category {
+  background: #e67e22;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.btn-edit-image-category:hover, .btn-edit-plant:hover, .btn-edit-category:hover {
+  background: #ca6f1e;
+}
+
+/* Hiệu ứng hover nút trên ảnh cây */
+.plant-img-hover-box .plant-action-btns {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.plant-img-hover-box:hover .plant-action-btns {
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+
+/* Hiệu ứng hover nút trên ảnh gallery ảnh */
+.image-img-hover-box .image-action-btns {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.image-img-hover-box:hover .image-action-btns {
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+
+.image-gallery-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    margin-top: 25px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    justify-content: flex-start;
 }
 

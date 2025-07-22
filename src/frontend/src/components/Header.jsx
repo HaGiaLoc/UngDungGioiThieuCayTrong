@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Import hình ảnh từ thư mục assets
@@ -8,6 +8,13 @@ import instagramIcon from '../assets/images/Instagram02.png';
 
 function Header() {
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    fetch(import.meta.env.VITE_API_URL + '/api/categories')
+      .then(res => res.json())
+      .then(data => setCategories(data.filter(c => c.status === 'Hiển thị')))
+      .catch(() => setCategories([]));
+  }, []);
 
   // Hàm xử lý việc tìm kiếm
   const handleSearch = (event) => {
@@ -29,20 +36,16 @@ function Header() {
           <ul>
             <li><Link to="/">Trang Chủ</Link></li>
             <li className="dropdown">
-              <Link to="/danh-muc" className="dropdown-toggle">Danh Mục ▾</Link>
+              <Link to="/tim-kiem" className="dropdown-toggle">Danh Mục ▾</Link>
               <ul className="dropdown-menu">
-                {/* Thay đổi các link để phù hợp với routing của React */}
-                <li><Link to="/tim-kiem?category=de-ban">Cây Để Bàn</Link></li>
-                <li><Link to="/tim-kiem?category=phong-thuy">Cây Phong Thủy</Link></li>
-                <li><Link to="/tim-kiem?category=day-leo">Cây Dây Leo</Link></li>
-                <li><Link to="/tim-kiem?category=ua-bong">Cây Ưa Bóng</Link></li>
-                <li><Link to="/tim-kiem?category=xuong-rong">Xương Rồng</Link></li>
-                <li><Link to="/tim-kiem?category=sen-da">Sen Đá</Link></li>
+                {categories.map(cat => (
+                  <li key={cat.id}><Link to={`/tim-kiem?category=${encodeURIComponent(cat.name)}`}>{cat.name}</Link></li>
+                ))}
               </ul>
             </li>
             {/* Các link dạng # có thể giữ nguyên thẻ a */}
-            <li><a href="#featured-plants">Cây Nổi Bật</a></li>
-            <li><a href="#about">Về Chúng Tôi</a></li>
+            <li><a href="/#featured-plants">Cây Nổi Bật</a></li>
+            <li><a href="/#about">Về Chúng Tôi</a></li>
             <li className="dropdown">
               <a href="#" className="dropdown-toggle">Liên Hệ ▾</a>
               <ul className="dropdown-menu">

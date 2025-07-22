@@ -59,11 +59,11 @@ function HomePage() {
             <p>Đang tải dữ liệu...</p>
           ) : error ? (
             <p className="no-results">Lỗi: {error}</p>
-          ) : plants.length > 0 ? (
+          ) : plants.filter(plant => plant.status === 'Hiển thị').length > 0 ? (
             <div className="plant-grid">
-              {plants.map(plant => (
+              {plants.filter(plant => plant.status === 'Hiển thị').map(plant => (
                 <div className="plant-card" key={plant.id}>
-                  <img src={plant.image} alt={plant.name} />
+                  <img src={plant.image ? plant.image : ''} alt={plant.name} />
                   <h3>{plant.name}</h3>
                   <p>{plant.description}</p>
                   <Link to={`/chi-tiet/${plant.id}`} className="btn btn-secondary">Xem Chi Tiết</Link>
