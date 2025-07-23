@@ -44,7 +44,7 @@ jobs:
           path: src/frontend/interface/dist
 
       - name: Build Docker image for frontend
-        working-directory: src/frontend/interface
+        working-directory: src/frontend
         run: docker build -t your-frontend-image .
 
   build-backend:
