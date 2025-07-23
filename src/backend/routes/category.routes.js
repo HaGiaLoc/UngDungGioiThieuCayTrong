@@ -1,3 +1,6 @@
+const express = require('express');
+const router = express.Router();
+const categoryController = require('../controllers/category.controller');
 /**
  * @swagger
  * /api/categories:
@@ -23,10 +26,6 @@
  *                   count:
  *                     type: integer
  */
-const express = require('express');
-const router = express.Router();
-const categoryController = require('../controllers/category.controller');
-
 router.get('/', categoryController.getAll);
 
 /**

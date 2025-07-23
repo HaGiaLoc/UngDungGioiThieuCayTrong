@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// Import hình ảnh
 import kimTienImg from '../../assets/images/Kt.jpg';
 import luoiHoImg from '../../assets/images/Lh.jpg';
 import trauBaImg from '../../assets/images/Tb.jpg';
-// about-image-container đang trống, bạn có thể thêm ảnh nền qua CSS hoặc dùng thẻ img
 
 const API_URL = import.meta.env.VITE_API_URL;
 

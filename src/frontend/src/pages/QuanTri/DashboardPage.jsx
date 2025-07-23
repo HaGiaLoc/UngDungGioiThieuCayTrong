@@ -1,4 +1,3 @@
-// src/pages/QuanTri/DashboardPage.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StatCard from '../../components/StatCard.jsx';
@@ -13,7 +12,6 @@ function DashboardPage() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Kiểm tra token đăng nhập
   useEffect(() => {
     const token = localStorage.getItem('admin_token') || sessionStorage.getItem('admin_token');
     if (!token) {

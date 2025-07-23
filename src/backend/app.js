@@ -13,13 +13,10 @@ const errorHandler = require('./middlewares/errorHandler');
 const authRoutes = require('./routes/auth.routes');
 
 const app = express();
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Cấu hình Swagger - Chuyển từ server.js sang đây
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
@@ -40,14 +37,11 @@ const swaggerDefinition = {
 
 const options = {
   swaggerDefinition,
-  // Đường dẫn đến các file chứa API-docs. __dirname là thư mục hiện tại của file app.js
   apis: [path.join(__dirname, './routes/*.js')],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
 
-// Routes
-// Chuyển hướng trang chủ đến trang tài liệu API
 app.get('/', (req, res) => {
   res.redirect('/api-docs');
 });
@@ -59,7 +53,6 @@ app.use('/api/images', imageRoutes);
 app.use('/api/statistics', statisticsRoutes);
 app.use('/api/auth', authRoutes);
 
-// Xử lý lỗi (đặt ở cuối cùng)
 app.use(errorHandler);
 
 module.exports = app;

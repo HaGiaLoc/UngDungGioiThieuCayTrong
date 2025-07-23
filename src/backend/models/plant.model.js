@@ -34,12 +34,12 @@ const Plant = sequelize.define('Plant', {
     defaultValue: false,
   },
   features: {
-    type: DataTypes.JSON, // Lưu mảng string
+    type: DataTypes.JSON,
     allowNull: true,
     defaultValue: [],
   },
   care: {
-    type: DataTypes.JSON, // Lưu object { light, water, soil, temp }
+    type: DataTypes.JSON,
     allowNull: true,
     defaultValue: {},
   },
