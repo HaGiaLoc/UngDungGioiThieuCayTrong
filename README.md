@@ -87,7 +87,6 @@ GTCayTrong/
 │
 ├── docker-compose.yml        # Chạy cả frontend & backend bằng Docker
 ├── .gitignore                # Các file/thư mục không đưa lên git
-└── README.md                 # Tài liệu tổng thể dự án (file này)
 ```
 
 ### Giải thích nhanh:
