@@ -33,11 +33,6 @@ const Plant = sequelize.define('Plant', {
     allowNull: false,
     defaultValue: false,
   },
-  gallery: {
-    type: DataTypes.JSON, // Lưu mảng đường dẫn ảnh
-    allowNull: true,
-    defaultValue: [],
-  },
   features: {
     type: DataTypes.JSON, // Lưu mảng string
     allowNull: true,
