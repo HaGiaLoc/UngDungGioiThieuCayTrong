@@ -19,8 +19,7 @@ const connectDB = async () => {
       console.log('Kết nối MySQL thành công!');
       connected = true;
     } catch (error) {
-      console.error('Kết nối MySQL thất bại, thử lại sau 3 giây...');
-      await new Promise(res => setTimeout(res, 3000));
+      await new Promise(res => setTimeout(res, 1000));
     }
   }
 };

@@ -200,8 +200,8 @@ function PlantsAdminPage() {
                     <div style={{position:'relative', width:'120px', height:'90px', margin:'0 auto'}} className="plant-img-hover-box">
                       <img src={plant.image ? plant.image : "https://via.placeholder.com/50x50/90EE90/000?text=Cây"} alt="Ảnh" style={{width:'100%', height:'100%', objectFit:'cover', borderRadius:'10px'}} />
                     </div>
-                    <div style={{textAlign:'center', marginTop:'6px', fontWeight:'bold', color:'#333', fontSize:'1rem'}}>{plant.name}</div>
                   </td>
+                  <td data-label="tencay">{plant.name}</td>
                   <td data-label="danhmuc">{plant.category}</td>
                   <td data-label="trangthai">
                     <span className={`status ${plant.status === 'Hiển thị' ? 'status-visible' : 'status-hidden'}`}>{plant.status}</span>
