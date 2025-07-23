@@ -4,7 +4,6 @@ const Plant = require('../models/plant.model');
 exports.getAll = async (req, res) => {
   try {
     const categories = await Category.findAll();
-    // Đếm số lượng cây cho từng danh mục
     const categoriesWithCount = await Promise.all(categories.map(async (cat) => {
       const count = await Plant.count({ where: { category: cat.name } });
       return { ...cat.toJSON(), count };

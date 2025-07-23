@@ -1,9 +1,5 @@
-// interface/components/PlantCard.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-// Bạn có thể tạo file CSS riêng cho card nếu muốn
-// import './PlantCard.css'; 
 
 function PlantCard({ id, image, name, description }) {
   return (
