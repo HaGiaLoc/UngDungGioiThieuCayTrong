@@ -1,4 +1,4 @@
-// src/components/PlantCard.jsx
+// interface/components/PlantCard.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 

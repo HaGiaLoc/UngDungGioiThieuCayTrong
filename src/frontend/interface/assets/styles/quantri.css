@@ -6,7 +6,7 @@
 .admin-sidebar {
     width: 240px;
     background-image: url('../images/BGQuantri.png');
-    color: #ecf0f1;
+    color: #000;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -50,7 +50,7 @@
     align-items: center;
     gap: 12px;
     padding: 13px 25px;
-    color: #ffffff;
+    color: #000;
     transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease, transform 0.2s ease;
     border-left: 4px solid transparent;
     text-decoration: none;
@@ -72,7 +72,7 @@
 .admin-nav li a:hover,
 .admin-nav li .logout-btn:hover {
     background-color: rgba(52, 152, 219, 0.1);
-    color: #fff;
+    color: #000;
     text-decoration: none;
     transform: translateX(4px);
     border-left-color: rgba(54, 162, 235, 0.5);

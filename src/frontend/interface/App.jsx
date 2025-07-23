@@ -1,4 +1,4 @@
-// src/App.jsx
+// interface/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 
