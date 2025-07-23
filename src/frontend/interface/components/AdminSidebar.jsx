@@ -1,6 +1,4 @@
-// interface/components/AdminSidebar.jsx
 import React from 'react';
-// ✅ 1. IMPORT THÊM `useNavigate` TỪ REACT-ROUTER-DOM
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -12,10 +10,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 function AdminSidebar() {
-  // ✅ 2. KHỞI TẠO HOOK `useNavigate`
   const navigate = useNavigate();
 
-  // ✅ 3. TẠO HÀM XỬ LÝ VIỆC ĐĂNG XUẤT
   const handleLogout = () => {
     localStorage.removeItem('admin_token');
     navigate('/login');
@@ -49,7 +45,6 @@ function AdminSidebar() {
             </NavLink>
           </li>
           
-          {/* ✅ 4. THAY THẾ <Link> BẰNG <button> VÀ GỌI HÀM handleLogout */}
           <li>
             <button type="button" onClick={handleLogout} className="logout-btn">
               <FontAwesomeIcon icon={faSignOutAlt} className="sidebar-icon" /> Đăng Xuất
