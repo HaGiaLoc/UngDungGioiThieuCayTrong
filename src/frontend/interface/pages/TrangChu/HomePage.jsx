@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import kimTienImg from '../../assets/images/Kt.jpg';
-import luoiHoImg from '../../assets/images/Lh.jpg';
-import trauBaImg from '../../assets/images/Tb.jpg';
-
 const API_URL = import.meta.env.VITE_API_URL;
 
 function HomePage() {

@@ -20,31 +20,42 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-frontend-node-${{ hashFiles('frontend/package-lock.json') }}
+          path: src/frontend/node_modules
+          key: ${{ runner.os }}-frontend-node-${{ hashFiles('src/frontend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-frontend-node-
 
       - name: Install dependencies
-        working-directory: frontend
+        working-directory: src/frontend
         run: npm install --legacy-peer-deps
 
-      - name: Lint frontend (nếu có)
-        working-directory: frontend
+      - name: Lint frontend
+        working-directory: src/frontend
         run: npm run lint || echo "No lint script"
 
       - name: Build Frontend (React + Vite)
-        working-directory: frontend
+        working-directory: src/frontend
         run: npm run build
 
+      - name: Kiểm tra dist có tồn tại không
+        working-directory: src/frontend
+        run: |
+          echo "Kiểm tra thư mục dist"
+          ls -la
+          ls -la dist
+
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: frontend-build
-          path: frontend/dist
+          path: src/frontend/dist
+
+      - name: List dist folder
+        working-directory: src/frontend
+        run: ls -la dist
 
       - name: Build Docker image for frontend
-        working-directory: frontend
+        working-directory: src/frontend
         run: docker build -t your-frontend-image .
 
   build-backend:
@@ -63,35 +74,36 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
-          path: backend/node_modules
-          key: ${{ runner.os }}-backend-node-${{ hashFiles('backend/package-lock.json') }}
+          path: src/backend/node_modules
+          key: ${{ runner.os }}-backend-node-${{ hashFiles('src/backend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-backend-node-
 
       - name: Install dependencies
-        working-directory: backend
+        working-directory: src/backend
         run: npm install
 
-      - name: Lint backend (nếu có)
-        working-directory: backend
+      - name: Lint backend
+        working-directory: src/backend
         run: npm run lint || echo "No lint script"
 
       - name: Download frontend build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: frontend-build
-          path: backend/public
+          path: src/backend/public
 
       - name: Test backend
-        working-directory: backend
+        working-directory: src/backend
         run: npm test || echo "Không có test backend"
 
       - name: Build Docker image for backend
-        working-directory: backend
+        working-directory: src/backend
         run: docker build -t your-backend-image .
 
       - name: Build Docker Compose
-        run: docker-compose build
+        run: docker compose -f src/docker-compose.yml build
+
 
       - name: Deploy (nếu cần)
         run: echo "Triển khai lên server hoặc cloud tại đây" 

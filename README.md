@@ -48,55 +48,86 @@ npm run dev
 
 ### 4. Chạy bằng Docker (tùy chọn)
 ```bash
+cd src
 docker-compose up --build
 ```
+
+## 💾 Sao Lưu & Khôi Phục Cơ Sở Dữ Liệu
+
+### 1. Sao lưu
+
+**Với Docker:**
+```sh
+docker exec mysql_db mysqldump -u root -pYOUR_PASSWORD TEN_DATABASE > backup.sql
+```
+- Thay `YOUR_PASSWORD` bằng mật khẩu root MySQL.
+- Thay `TEN_DATABASE` bằng tên database cần sao lưu.
+
+**Nếu chạy MySQL trực tiếp:**
+```sh
+mysqldump -u root -p TEN_DATABASE > backup.sql
+```
+
+### 2. Khôi phục
+
+**Với Docker:**
+```sh
+docker exec -i mysql_db mysql -u root -pYOUR_PASSWORD TEN_DATABASE < backup.sql
+```
+
+**Nếu chạy MySQL trực tiếp:**
+```sh
+mysql -u root -p TEN_DATABASE < backup.sql
+```
+
+> Lưu ý: File `backup.sql` cần nằm ở thư mục bạn chạy lệnh hoặc chỉ rõ đường dẫn đầy đủ.
 
 ---
 
 ## ⚙️ Cấu Trúc Dự Án Chi Tiết
 ```
-GTCayTrong/
-├── backend/                  # Backend - Node.js, Express, Sequelize
-│   ├── app.js                # Khởi tạo app, cấu hình middleware, swagger, routes
-│   ├── server.js             # Điểm khởi động server, kết nối CSDL
-│   ├── package.json          # Thông tin, dependencies backend
-│   ├── Dockerfile            # Docker hóa backend
-│   ├── config/               # Cấu hình (CSDL, biến môi trường, ...)
-│   │   └── database.js       # Kết nối và cấu hình Sequelize
-│   ├── controllers/          # Xử lý logic cho các route (auth, plant, category, image)
-│   ├── models/               # Định nghĩa các model Sequelize (Plant, Category, Image)
-│   ├── routes/               # Định nghĩa các endpoint API
-│   ├── services/             # Xử lý nghiệp vụ, truy vấn dữ liệu
-│   ├── middlewares/          # Middleware dùng chung (xử lý lỗi, xác thực, ...)
-│   ├── utils/                # Hàm tiện ích dùng chung
+UngDungGioiThieuCayTrong/
+├── src/                      # Mã nguồn chính của dự án
+│   ├── backend/              # Backend - Node.js, Express, Sequelize
+│   │   ├── config/               # Cấu hình (CSDL, biến môi trường, ...)
+│   │   ├── controllers/          # Xử lý logic cho các route (auth, plant, category, image)
+│   │   ├── middlewares/          # Middleware dùng chung (xử lý lỗi, xác thực, ...)
+│   │   ├── models/               # Định nghĩa các model Sequelize (Plant, Category, Image)
+│   │   ├── node_modules/         # Thư viện cài đặt bởi npm
+│   │   ├── routes/               # Định nghĩa các endpoint API
+│   │   ├── services/             # Xử lý nghiệp vụ, truy vấn dữ liệu
+│   │   ├── utils/                # Hàm tiện ích dùng chung
+│   │   ├── .env                  # Biến môi trường backend
+│   │   ├── app.js                # Khởi tạo app, cấu hình middleware, swagger, routes
+│   │   ├── Dockerfile            # Docker hóa backend
+│   │   ├── package.json          # Thông tin, dependencies backend
+│   │   └── server.js             # Điểm khởi động server, kết nối CSDL
+│   │
+│   ├── frontend/             # Frontend - ReactJS
+│   │   ├── src/                  # Mã nguồn React
+│   │   │   ├── assets/           # Tài nguyên giao diện
+│   │   │   │   ├── images/       # Ảnh sử dụng trong giao diện
+│   │   │   │   └── styles/       # File CSS (global, quản trị, ...)
+│   │   │   ├── components/       # Các component dùng chung (Header, Footer, PlantCard, ...)
+│   │   │   ├── pages/            # Các trang chính
+│   │   │   │   ├── TrangChu/     # Trang người dùng (Home, Search, Detail, Category)
+│   │   │   │   └── QuanTri/      # Trang quản trị (Dashboard, Login, Admin, ...)
+│   │   │   ├── App.jsx           # Gốc ứng dụng React
+│   │   │   ├── main.jsx          # Điểm khởi tạo React
+│   │   │   ├── App.css           # Style tổng cho app
+│   │   │   └── index.css         # Style gốc
+│   │   ├── public/               # Ảnh tĩnh, favicon, index.html
+│   │   ├── package.json          # Thông tin, dependencies frontend
+│   │   ├── Dockerfile            # Docker hóa frontend
+│   │   ├── vite.config.js        # Cấu hình Vite
+│   │   ├── eslint.config.js      # Cấu hình ESLint
+│   │   └── .env                  # Biến môi trường frontend
+│   ├── docker-compose.yml            # Chạy cả frontend & backend bằng Docker
+│   └── .gitignore                    # Các file/thư mục không đưa lên git
 │
-├── frontend/                 # Frontend - ReactJS
-│   ├── src/                  # Mã nguồn React
-│   │   ├── assets/           # Ảnh, icon, style CSS
-│   │   │   ├── images/       # Ảnh sử dụng trong giao diện
-│   │   │   └── styles/       # File CSS (global, quản trị, ...)
-│   │   ├── components/       # Các component dùng chung (Header, Footer, PlantCard, ...)
-│   │   ├── pages/            # Các trang chính (Trang chủ, Quản trị, Chi tiết, ...)
-│   │   │   ├── TrangChu/     # Trang người dùng (Home, Search, Detail, Category)
-│   │   │   └── QuanTri/      # Trang quản trị (Dashboard, Login, Admin, ...)
-│   │   ├── App.jsx           # Gốc ứng dụng React
-│   │   └── main.jsx          # Điểm khởi tạo React
-│   ├── public/               # Ảnh tĩnh, favicon, index.html
-│   ├── package.json          # Thông tin, dependencies frontend
-│   ├── Dockerfile            # Docker hóa frontend
-│
-├── docker-compose.yml        # Chạy cả frontend & backend bằng Docker
-├── .gitignore                # Các file/thư mục không đưa lên git
+├── thesis/                       # Thư mục luận văn/báo cáo
+└── README.md                     # Tài liệu tổng thể dự án
 ```
-
-### Giải thích nhanh:
-- **backend/**: Toàn bộ mã nguồn và cấu hình cho API, database, nghiệp vụ.
-- **frontend/**: Toàn bộ mã nguồn React, giao diện người dùng.
-- **docker-compose.yml**: Dùng để chạy đồng thời cả frontend và backend bằng Docker.
-- **.gitignore**: Loại trừ các file không cần thiết khi đẩy lên GitHub.
-- **README.md**: Tài liệu hướng dẫn tổng thể dự án.
-
----
 
 ## 📄 Tài Khoản Mặc Định (Demo)
 - Tài khoản admin:  
@@ -113,3 +144,6 @@ GTCayTrong/
 ---
 
 Chúc bạn sử dụng hệ thống hiệu quả! 🌿
+
+---
+
