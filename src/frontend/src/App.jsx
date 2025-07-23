@@ -11,7 +11,6 @@ import CategoryPage from './pages/TrangChu/CategoryPage.jsx';
 import DetailPage from './pages/TrangChu/DetailPage.jsx';
 import AdminLayout from './pages/QuanTri/AdminLayout.jsx';
 
-// ✅ ĐƯỜNG DẪN ĐÃ THAY ĐỔI: Trỏ vào thư mục QuanTri
 import LoginPage from './pages/QuanTri/LoginPage.jsx';
 
 // Component layout chung cho trang người dùng

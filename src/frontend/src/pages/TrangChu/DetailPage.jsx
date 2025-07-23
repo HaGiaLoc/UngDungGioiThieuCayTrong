@@ -33,6 +33,9 @@ function DetailPage() {
   if (error) return <p>Lỗi: {error}</p>;
   if (!plant) return <p>Không tìm thấy cây.</p>;
 
+  // Thêm log để debug dữ liệu nhận được từ backend
+  console.log('Chi tiết plant:', plant);
+
   // Nếu tìm thấy cây, render ra giao diện chi tiết
   return (
     <main className="product-detail-main">
@@ -40,19 +43,7 @@ function DetailPage() {
         <div className="product-detail-layout">
           {/* Cột Ảnh Sản Phẩm */}
           <div className="product-image-column">
-            <img src={plant.mainImage} alt={plant.name} />
-            <section id="mini-gallery" className="image-gallery-section">
-              <div className="container">
-                <div className="gallery-grid mini-gallery-grid">
-                  {/* Lặp qua thư viện ảnh mini */}
-                  {plant.gallery.map((image, index) => (
-                    <div className="gallery-item" key={index}>
-                      <img src={image} alt={`${plant.name} - ảnh ${index + 1}`} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
+            <img src={plant.image ? plant.image : ''} alt={plant.name} />
           </div>
 
           {/* Cột Thông Tin Sản Phẩm */}
@@ -60,19 +51,29 @@ function DetailPage() {
             <h1>{plant.name}</h1>
             <div className="product-description">
               <p>{plant.description}</p>
-              <h3>Đặc điểm nổi bật:</h3>
-              <ul>
-                {plant.features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
-              </ul>
-              <h3>Hướng dẫn chăm sóc:</h3>
-              <ul>
-                <li><strong>Ánh sáng:</strong> {plant.care.light}</li>
-                <li><strong>Nước:</strong> {plant.care.water}</li>
-                <li><strong>Đất:</strong> {plant.care.soil}</li>
-                <li><strong>Nhiệt độ:</strong> {plant.care.temp}</li>
-              </ul>
+              {/* Đặc điểm nổi bật */}
+              {plant.features && Array.isArray(plant.features) && plant.features.length > 0 && (
+                <>
+                  <h3>Đặc điểm nổi bật:</h3>
+                  <ul>
+                    {plant.features.map((feature, index) => (
+                      <li key={index}>{feature}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {/* Hướng dẫn chăm sóc */}
+              {plant.care && (
+                <>
+                  <h3>Hướng dẫn chăm sóc:</h3>
+                  <ul>
+                    {plant.care.light && <li><strong>Ánh sáng:</strong> {plant.care.light}</li>}
+                    {plant.care.water && <li><strong>Nước:</strong> {plant.care.water}</li>}
+                    {plant.care.soil && <li><strong>Đất:</strong> {plant.care.soil}</li>}
+                    {plant.care.temp && <li><strong>Nhiệt độ:</strong> {plant.care.temp}</li>}
+                  </ul>
+                </>
+              )}
             </div>
           </div>
         </div>
