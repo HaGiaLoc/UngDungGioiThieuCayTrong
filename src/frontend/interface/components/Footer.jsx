@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Import các hình ảnh mạng xã hội có sẵn
 import zaloIcon from '../assets/images/zalo02.png';
 import facebookIcon from '../assets/images/facebook02.png';
 import instagramIcon from '../assets/images/Instagram02.png';
 
-// ✅ SỬA LẠI CÁC DÒNG IMPORT NÀY CHO KHỚP VỚI TÊN FILE CỦA BẠN
 import mapIcon from '../assets/images/map-marker-icon2.png';
 import emailIcon from '../assets/images/envelope-icon2.png';
 import phoneIcon from '../assets/images/phone-icon2.png';
@@ -31,7 +29,6 @@ function Footer() {
           <h4>Liên Hệ</h4>
           <ul className="social-links-list">
             <li>
-              {/* Dùng biến `mapIcon` đã được import ở trên */}
               <img src={mapIcon} alt="Địa chỉ" className="social-icon" />
                 Càng Long, Trà Vinh
             </li>
