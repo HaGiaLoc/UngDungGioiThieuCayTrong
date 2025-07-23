@@ -2,7 +2,7 @@ name: CI/CD for Frontend and Backend
 
 on:
   push:
-    branches: [main]
+    branches: [main]  # Kích hoạt khi push lên nhánh main
 
 jobs:
   build-frontend:
@@ -104,6 +104,5 @@ jobs:
       - name: Build Docker Compose
         run: docker compose -f src/docker-compose.yml build
 
-
       - name: Deploy (nếu cần)
-        run: echo "Triển khai lên server hoặc cloud tại đây" 
+        run: echo "Triển khai lên server hoặc cloud tại đây"
