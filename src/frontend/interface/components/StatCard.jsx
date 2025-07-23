@@ -1,4 +1,4 @@
-// src/components/StatCard.jsx
+// interface/components/StatCard.jsx
 import React from 'react';
 
 // ✅ 1. IMPORT COMPONENT FontAwesomeIcon và các icon cần thiết

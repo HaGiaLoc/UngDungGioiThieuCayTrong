@@ -1,4 +1,4 @@
-// src/components/AdminSidebar.jsx
+// interface/components/AdminSidebar.jsx
 import React from 'react';
 // ✅ 1. IMPORT THÊM `useNavigate` TỪ REACT-ROUTER-DOM
 import { NavLink, Link, useNavigate } from 'react-router-dom';

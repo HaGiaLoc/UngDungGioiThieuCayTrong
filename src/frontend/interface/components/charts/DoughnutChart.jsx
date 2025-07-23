@@ -1,4 +1,4 @@
-// src/components/charts/DoughnutChart.jsx
+// interface/components/charts/DoughnutChart.jsx
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
