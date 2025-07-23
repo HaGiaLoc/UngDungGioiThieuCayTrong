@@ -85,8 +85,8 @@ GTCayTrong/
 │   ├── package.json          # Thông tin, dependencies frontend
 │   ├── Dockerfile            # Docker hóa frontend
 │
-├── docker-compose.yml        # Chạy cả frontend & backend bằng Docker
 ├── .gitignore                # Các file/thư mục không đưa lên git
+└── docker-compose.yml        # Chạy cả frontend & backend bằng Docker
 ```
 
 ### Giải thích nhanh:
