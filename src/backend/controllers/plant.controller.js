@@ -1,8 +1,4 @@
-const service = require("../services/plant.service");
-
-function testController(req, res) {
-  res.send('Đây là controller mẫu cho cây trồng!');
-}
+const service = require('../services/plant.service');
 
 exports.getAll = async (req, res) => {
   try {
@@ -60,5 +56,4 @@ module.exports = {
   create: exports.create,
   update: exports.update,
   delete: exports.delete,
-  testController,
 }; 

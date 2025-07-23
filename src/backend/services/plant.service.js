@@ -1,4 +1,3 @@
-
 const Plant = require('../models/plant.model');
 
 async function getAllPlants(query = {}) {
