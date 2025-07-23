@@ -1,4 +1,3 @@
-// src/pages/QuanTri/LoginPage.jsx
 import React, { useEffect } from 'react';
 
 import logoImage from '../../assets/images/logo.png'; 
@@ -14,13 +13,10 @@ function LoginPage() {
     };
   }, []);
 
-  // Xử lý đăng nhập
   const handleLogin = (e) => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
-    // Luôn lưu vào localStorage
-    // Nếu chưa có backend thực tế, mô phỏng đăng nhập thành công
     if (!API_URL) {
       if (username === 'admin' && password === 'admin') {
         localStorage.setItem('admin_token', 'demo_token');
@@ -31,7 +27,6 @@ function LoginPage() {
         return;
       }
     }
-    // Đăng nhập thực tế
     fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

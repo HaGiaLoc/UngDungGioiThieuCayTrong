@@ -1,13 +1,9 @@
-// plantController.js - Controller mẫu cho cây trồng
-
 const service = require("../services/plant.service");
 
-// Hàm xử lý mẫu (chưa tích hợp API)
 function testController(req, res) {
   res.send('Đây là controller mẫu cho cây trồng!');
 }
 
-// Lấy danh sách tất cả cây trồng
 exports.getAll = async (req, res) => {
   try {
     const plants = await service.getAllPlants(req.query);
@@ -17,7 +13,6 @@ exports.getAll = async (req, res) => {
   }
 };
 
-// Lấy chi tiết một cây trồng
 exports.get = async (req, res) => {
   try {
     const plant = await service.getPlantById(req.params.id);
@@ -28,7 +23,6 @@ exports.get = async (req, res) => {
   }
 };
 
-// Thêm cây trồng mới
 exports.create = async (req, res) => {
   try {
     const plant = await service.createPlant(req.body);
@@ -38,7 +32,6 @@ exports.create = async (req, res) => {
   }
 };
 
-// Cập nhật cây trồng
 exports.update = async (req, res) => {
   try {
     const plant = await service.updatePlant(req.params.id, req.body);
@@ -49,7 +42,6 @@ exports.update = async (req, res) => {
   }
 };
 
-// Xóa cây trồng
 exports.delete = async (req, res) => {
   try {
     const result = await service.deletePlant(req.params.id);

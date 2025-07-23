@@ -1,63 +1,8 @@
-/* === quantri.css === */
-/* 
-    CẤU TRÚC TỆP:
-    1. Reset & Thiết lập cơ bản
-    2. Layout chính (Admin Container, Sidebar, Main Content)
-    3. Các thành phần chung (Header, Section, Form, Bảng, Nút bấm,...)
-    4. Styles cho các trang cụ thể (Tổng quan, Đăng nhập)
-    5. Responsive Media Queries
-*/
-
-/* ================================================================
-   1. RESET & THIẾT LẬP CƠ BẢN
-================================================================ */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    background-color: #f8f9fa;
-    color: #343a40;
-    scroll-behavior: smooth;
-}
-
-a {
-    text-decoration: none;
-    color: #ffffff;
-    transition: color 0.2s ease;
-    font-weight: 500;
-}
-a:hover {
-    text-decoration: none;
-    color: #2a8cd1;
-}
-
-ul {
-    list-style: none;
-}
-
-img {
-    max-width: 100%;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-/* ================================================================
-   2. LAYOUT CHÍNH
-================================================================ */
-
-/* --- 2.1. Admin Container --- */
 .admin-container {
     display: flex;
     min-height: 100vh;
 }
 
-/* --- 2.2. Sidebar --- */
 .admin-sidebar {
     width: 240px;
     background-image: url('../images/BGQuantri.png');
@@ -99,7 +44,6 @@ img {
     margin: 0;
 }
 
-/* ✅ SỬA ĐỔI: Gộp selector cho <a> và .logout-btn để dùng chung style */
 .admin-nav li a,
 .admin-nav li .logout-btn {
     display: flex;
@@ -112,21 +56,19 @@ img {
     text-decoration: none;
     position: relative;
     font-size: 0.95rem;
-    width: 100%; /* Đảm bảo button chiếm đủ chiều rộng */
-    text-align: left; /* Căn chữ cho button */
+    width: 100%;
+    text-align: left;
 }
 
-/* ✅ SỬA ĐỔI: Thêm các thuộc tính reset cho .logout-btn */
 .admin-nav li .logout-btn {
     background: none;
     border-top: none;
     border-right: none;
     border-bottom: none;
     cursor: pointer;
-    font-family: inherit; /* Kế thừa font chữ */
+    font-family: inherit;
 }
 
-/* ✅ SỬA ĐỔI: Gộp selector cho trạng thái :hover */
 .admin-nav li a:hover,
 .admin-nav li .logout-btn:hover {
     background-color: rgba(52, 152, 219, 0.1);
@@ -136,7 +78,6 @@ img {
     border-left-color: rgba(54, 162, 235, 0.5);
 }
 
-/* ✅ SỬA ĐỔI: Quy tắc cho icon (dùng class .sidebar-icon đã thêm trong JSX) */
 .sidebar-icon {
     width: 20px;
     text-align: center;
@@ -144,13 +85,11 @@ img {
     transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* ✅ SỬA ĐỔI: Gộp selector cho :hover icon */
 .admin-nav li a:hover .sidebar-icon,
 .admin-nav li .logout-btn:hover .sidebar-icon {
     transform: scale(1.1);
 }
 
-/* ✅ SỬA ĐỔI: class .active chỉ áp dụng cho thẻ <a> của NavLink */
 .admin-nav li a.active {
     background-color: rgba(54, 162, 235, 0.15);
     color: #fff;
@@ -164,7 +103,6 @@ img {
 }
 
 
-/* --- 2.3. Main Content --- */
 .admin-content {
     flex-grow: 1;
     margin-left: 240px;
@@ -184,10 +122,6 @@ img {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ... CÁC PHẦN CSS CÒN LẠI GIỮ NGUYÊN ... */
-/* ... (toàn bộ các mục 3, 4, 5 và modal styles) ... */
-
-/* --- 3.1. Content Header & Section --- */
 .content-header {
     display: flex;
     justify-content: space-between;
@@ -229,7 +163,6 @@ img {
      font-weight: 600;
 }
 
-/* --- 3.2. Form Styles --- */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -287,7 +220,6 @@ img {
 }
 .form-actions button { margin-left: 12px; }
 
-/* --- 3.3. Table Styles --- */
 .table-responsive { overflow-x: auto; }
 
 .admin-table {
@@ -358,7 +290,6 @@ img {
 .status-visible { background-color: #dff9e8; color: #1a7b3e; border-color: #b8e6c9; }
 .status-hidden { background-color: #fff8e1; color: #8a6d3b; border-color: #f8e5aa; }
 
-/* --- 3.4. Button Styles --- */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -415,7 +346,6 @@ img {
 .btn-hide { background-color: #ffc107; color: #212529; border-color: #ffc107; }
 .btn-show { background-color: #2ecb71; color: #fff; border-color: #2ecb71; }
 
-/* --- 3.5. List Filters & Pagination --- */
 .list-filters {
     display: flex;
     flex-wrap: wrap;
@@ -478,11 +408,6 @@ img {
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* ================================================================
-   4. STYLES CHO CÁC TRANG CỤ THỂ
-================================================================ */
-
-/* --- 4.1. Trang Tổng quan (Dashboard) --- */
 .overview-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -545,7 +470,6 @@ img {
     margin-top: auto;
 }
 
-/* --- 4.2. Trang Đăng nhập (Login) --- */
 body.login-page {
     background-image: url('../images/BackGround.jpg');
     background-size: cover;
@@ -696,7 +620,6 @@ body.login-page {
     margin-top: 10px;
 }
 
-/* Khung đăng nhập mở rộng và bóng đẹp */
 .custom-login-box {
   max-width: none;
   width: 60vw;
@@ -711,7 +634,6 @@ body.login-page {
   box-shadow: 0 16px 48px 0 rgba(60, 120, 180, 0.22), 0 3px 16px 0 rgba(60, 120, 180, 0.13);
 }
 
-/* Nút đăng nhập nổi bật hơn */
 .custom-login-btn {
   background: linear-gradient(90deg, #43d167 0%, #2eb872 100%);
   color: #fff;
@@ -726,9 +648,6 @@ body.login-page {
   box-shadow: 0 4px 16px rgba(67, 209, 103, 0.18);
 }
 
-/* ================================================================
-   5. RESPONSIVE
-================================================================ */
 @media (max-width: 992px) {
     .admin-content { padding: 20px 15px; }
     .content-header h1 { font-size: 1.7rem; }
@@ -796,22 +715,14 @@ body.login-page {
         max-width: 90%;
     }
 }
-/* 
-================================================================
-   --- MODAL STYLES (PHIÊN BẢN SỬA LỖI HIỂN THỊ) --- 
-================================================================
-*/
-
 .modal-overlay {
-    /* Luôn luôn là flex để căn giữa */
     display: flex; 
     justify-content: center;
     align-items: center;
 
-    /* Dùng opacity và visibility để ẩn/hiện */
     opacity: 0;
     visibility: hidden;
-    pointer-events: none; /* Ngăn không cho click vào modal khi nó đang ẩn */
+    pointer-events: none;
 
     position: fixed;
     top: 0;
@@ -821,11 +732,9 @@ body.login-page {
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1000;
 
-    /* Hiệu ứng chuyển động cho nền mờ */
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Class .active sẽ kích hoạt modal */
 .modal-overlay.active {
     opacity: 1;
     visibility: visible;
@@ -843,12 +752,10 @@ body.login-page {
     display: flex;
     flex-direction: column;
 
-    /* Hiệu ứng trượt xuống và mờ dần cho box */
     transform: translateY(-30px);
     transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
 
-/* Khi modal active, box sẽ trượt vào vị trí */
 .modal-overlay.active .modal-box {
     transform: translateY(0);
 }
@@ -909,7 +816,6 @@ body.login-page {
     line-height: 1.6;
     margin-bottom: 10px;
 }
-/* Dùng Flexbox để căn chỉnh icon trong Footer */
 .social-links-list li,
 .social-links-list li a {
   display: flex;         /* Bật Flexbox cho thẻ <li> và <a> */
@@ -920,7 +826,6 @@ body.login-page {
   margin-right: 8px;     /* Thêm khoảng cách giữa icon và chữ */
 }
 
-/* Nút đỏ (Xóa, Sửa) cho admin */
 .btn-delete-image-category, .btn-edit-image-category, .btn-delete-plant, .btn-edit-plant, .btn-delete-category, .btn-edit-category {
   min-width: 60px;
   max-width: 90px;
@@ -953,7 +858,6 @@ body.login-page {
   background: #ca6f1e;
 }
 
-/* Hiệu ứng hover nút trên ảnh cây */
 .plant-img-hover-box .plant-action-btns {
   opacity: 0;
   pointer-events: none;
@@ -964,7 +868,6 @@ body.login-page {
   pointer-events: auto;
 }
 
-/* Hiệu ứng hover nút trên ảnh gallery ảnh */
 .image-img-hover-box .image-action-btns {
   opacity: 0;
   pointer-events: none;

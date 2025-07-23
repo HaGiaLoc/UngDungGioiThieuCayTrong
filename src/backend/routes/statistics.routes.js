@@ -13,19 +13,13 @@ const Category = require('../models/category.model');
  *       200:
  *         description: Dữ liệu thống kê tổng quan
  */
-// GET /api/statistics
 router.get('/', async (req, res) => {
   try {
-    // Tổng số cây
     const totalPlants = await Plant.count();
-    // Tổng số danh mục
     const totalCategories = await Category.count();
-    // Số cây đang hiển thị
     const visiblePlants = await Plant.count({ where: { status: 'Hiển thị' } });
-    // Số cây đang ẩn
     const hiddenPlants = await Plant.count({ where: { status: 'Ẩn' } });
 
-    // Số cây theo tháng (trong năm hiện tại)
     const { Op } = require('sequelize');
     const now = new Date();
     const year = now.getFullYear();
@@ -44,7 +38,6 @@ router.get('/', async (req, res) => {
       plantsByMonth.push(count);
     }
 
-    // Số cây theo danh mục
     const categories = await Category.findAll();
     const plantsByCategory = [];
     for (const cat of categories) {

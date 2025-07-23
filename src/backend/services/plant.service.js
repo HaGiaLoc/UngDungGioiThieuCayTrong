@@ -1,9 +1,7 @@
-// plantService.js - Service mẫu cho cây trồng
 
 const Plant = require('../models/plant.model');
 
 async function getAllPlants(query = {}) {
-  // Hỗ trợ lọc featured, category, keyword
   const where = {};
   if (query.featured) where.featured = true;
   if (query.category) where.category = query.category;

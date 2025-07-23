@@ -1,15 +1,12 @@
-// src/pages/QuanTri/AdminLayout.jsx
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-// Import các component và trang con
 import AdminSidebar from '../../components/AdminSidebar.jsx';
 import DashboardPage from './DashboardPage.jsx';
 import PlantsAdminPage from './PlantsAdminPage.jsx';
 import CategoriesAdminPage from './CategoriesAdminPage.jsx';
 import ImagesAdminPage from './ImagesAdminPage.jsx';
 
-// Import file CSS dành riêng cho trang quản trị
 import '../../assets/styles/quantri.css';
 
 

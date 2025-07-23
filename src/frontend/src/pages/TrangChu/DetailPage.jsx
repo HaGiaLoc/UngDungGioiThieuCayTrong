@@ -1,9 +1,6 @@
-// src/pages/TrangChu/DetailPage.jsx
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-// Import hình ảnh (giả sử bạn đã đặt chúng trong assets)
 import kimTienImg from '../../assets/images/Kt.jpg';
 import luoiHoImg from '../../assets/images/Lh.jpg';
 import trauBaImg from '../../assets/images/Tb.jpg';
@@ -33,10 +30,8 @@ function DetailPage() {
   if (error) return <p>Lỗi: {error}</p>;
   if (!plant) return <p>Không tìm thấy cây.</p>;
 
-  // Thêm log để debug dữ liệu nhận được từ backend
   console.log('Chi tiết plant:', plant);
 
-  // Nếu tìm thấy cây, render ra giao diện chi tiết
   return (
     <main className="product-detail-main">
       <div className="container">
