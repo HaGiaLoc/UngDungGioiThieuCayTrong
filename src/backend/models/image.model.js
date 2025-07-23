@@ -15,10 +15,6 @@ const Image = sequelize.define('Image', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
 }, {
   tableName: 'images',
   timestamps: true,
