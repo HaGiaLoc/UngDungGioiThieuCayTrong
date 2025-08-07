@@ -53,7 +53,12 @@
 cd ../frontend
 npm install
 
-# 2. Khởi động frontend
+# 2. Tạo tệp .env
+# Trong thư mục frontend, tạo một tệp có tên là `.env`
+# Mở tệp đó và thêm nội dung sau:
+# VITE_API_URL=http://localhost:3000
+
+# 3. Khởi động frontend
 npm run dev
 # Mặc định chạy ở http://localhost:5173
 ```
